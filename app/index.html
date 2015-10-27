@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>My AngularJS App</title>
+
+  <link rel="stylesheet" type="text/css" href="libs/angular-material/angular-material.min.css" async>
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons" async>
+
+  <style type="text/css">
+    .angular-google-map-container { height: 400px; }
+    md-input-container { width: 100%; }
+  </style>
+</head>
+<body>
+<body ng-controller='someController'>
+  <ui-gmap-google-map center='map.center' zoom='map.zoom' options='map.options'>
+    <ui-gmap-polyline path='line.path'
+                  clickable='line.clickable'
+                  geodesic='line.geodesic'
+                  static='line.static'
+        >
+    </ui-gmap-polyline>
+  </ui-gmap-google-map>
+
+  <div layout="row">
+    <div flex="25">
+    </div>
+    <div flex="50">
+      <md-list>
+        <md-list-item>
+          <md-input-container>
+            <label>Origin Latitude</label>
+            <input type="number" ng-model="line.path[0].latitude" required>
+          </md-input-container>
+          <md-input-container>
+            <label>Origin Longitude</label>
+            <input type="number" ng-model="line.path[0].longitude" required>
+          </md-input-container>
+        </md-list-item>
+
+        <md-list-item>
+          <md-input-container>
+            <label>Destination Latitude</label>
+            <input type="number" ng-model="line.path[1].latitude">
+          </md-input-container>
+          <md-input-container>
+            <label>Destination Longitude</label>
+            <input type="number" ng-model="line.path[1].longitude">
+          </md-input-container>
+        </md-list-item>
+        <md-list-item> <md-switch ng-model="line.draggable">Draggable</md-switch> </md-list-item>
+        <md-list-item> <md-switch ng-model="line.geodesic">Geodesic line shape</md-switch> </md-list-item>
+        <md-list-item> <md-switch ng-model="line.clickable">Clickable line</md-switch> </md-list-item>
+        <md-list-item> <md-switch ng-model="line.static">Static line</md-switch> </md-list-item>
+      </md-list>
+    </div>
+  </div>
+
+
+  <md-button class="md-fab md-primary" aria-label="Use Android">
+    <md-icon class="material-icons">add</md-icon>
+  </md-button>
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <script type="text/javascript" src="libs/angular/angular.js"></script>
+  <script type="text/javascript" src="libs/angular-route/angular-route.js"></script>
+  <script type="text/javascript" src="libs/lodash/lodash.min.js" ></script>
+
+  <script type="text/javascript" src="libs/angular-animate/angular-animate.min.js"></script>
+  <script type="text/javascript" src="libs/angular-aria/angular-aria.min.js"></script>
+  <script type="text/javascript" src="libs/angular-simple-logger/dist/angular-simple-logger.min.js" ></script>
+  <script type="text/javascript" src="libs/angular-google-maps/dist/angular-google-maps.min.js"></script>
+  <script type="text/javascript" src="libs/angular-material/angular-material.min.js"></script>
+
+  <script type="text/javascript" src="app.js"></script>
+  <script type="text/javascript" src="main.js"></script>
+</body>
+</html>
