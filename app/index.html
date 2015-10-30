@@ -19,12 +19,11 @@
     md-input-container { width: 100%; }
   </style>
 </head>
-<body ng-controller='someCtrl'>
-<ui-gmap-google-map center='map.center' zoom='map.zoom' options='map.options'>
+<body ng-controller="someCtrl as sc">
+<ui-gmap-google-map center="map.center" zoom="map.zoom" options="map.options">
   <ui-gmap-polyline ng-repeat="flight in flights"
-                    path='[ flight.origin.coordinates, flight.destination.coordinates]'
-                    geodesic='true'
-          >
+                    path='[flight.origin.coordinates, flight.destination.coordinates]'
+                    geodesic='true'>
   </ui-gmap-polyline>
 </ui-gmap-google-map>
 
@@ -34,22 +33,57 @@
 <div flex="20"></div>
 
 <div flex="grow" class="md-whiteframe-z1">
-    <md-list>
-      <md-list-item class="md-2-line" ng-repeat="flight in flights">
-        <div class="md-list-item-text">
-          <h1>{{ flight.origin.code }} /<!-- <i class="material-icons">&#xE5C8;</i>--> {{ flight.destination.code }}</h1>
-        </div>
-        <div class="md-list-item-text">
-          <p> {{ flight.origin.name }} </p>
-          <p> {{ flight.destination.name }} </p>
-        </div>
-        <div class="md-list-item-text">
-          <h1> {{ flight.airline }} </h1>
-          <md-icon class="material-icons md-secondary" aria-label="Open Chat" ng-click='showDialog($event)'>mode_edit</md-icon>
-        </div>
-        <md-divider md-inset ng-if="!$last"></md-divider>
-      </md-list-item>
-    </md-list>
+  <md-list>
+    <md-list-item class="md-2-line" ng-repeat="flight in flights" ng-controller="flightListItemCtrl as fli">
+      <div class="md-list-item-text" ng-if="!fli.isEditing">
+        <h1>{{ flight.origin.code }} /<!-- <i class="material-icons">&#xE5C8;</i>--> {{ flight.destination.code }}</h1>
+      </div>
+      <div class="md-list-item-text" ng-if="!fli.isEditing">
+        <p> {{ flight.origin.name }} </p>
+        <p> {{ flight.destination.name }} </p>
+      </div>
+      <div class="md-list-item-text" ng-if="!fli.isEditing">
+        <h1> {{ flight.airline }} </h1>
+        <md-icon class="material-icons md-secondary" aria-label="Open Chat" ng-click='fli.edit($event)'>mode_edit</md-icon>
+      </div>
+
+      <div class="md-list-item-text" layout="column" flex layout-padding>
+        <md-input-container flex>
+          <label>Origin</label>
+          <md-select ng-model="fli.selectedAirport">
+            <md-option ng-repeat="state in fli.airports" value="{{state}}">
+              {{state}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container flex>
+          <label>Arrival time</label>
+          <input type="datetime-local" ng-model="user.city" required>
+        </md-input-container>
+      </div>
+      <div class="md-list-item-text" layout="column" layout-padding>
+        <md-input-container flex>
+        <label>Destination</label>
+          <md-select ng-model="fli.selectedAirport">
+            <md-option ng-repeat="state in fli.airports" value="{{state}}">
+              {{state}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container flex>
+          <label>Departure time</label>
+          <input type="datetime-local" ng-model="user.city" required>
+        </md-input-container>
+      </div>
+      <div class="md-list-item-text" ng-if="fli.isEditing" layout-padding>
+        <md-input-container flex>
+          <label>Airline</label>
+          <input ng-model="user.city">
+        </md-input-container>
+        <md-button class="md-primary center" aria-label="More" flex style="width:90%">Save flight</md-button>
+      </div>
+    </md-list-item>
+  </md-list>
 </div>
 
 <div flex="20"></div>
@@ -76,5 +110,6 @@
 
 <script type="text/javascript" src="app.js"></script>
 <script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="flight-list-item-controller.js"></script>
 </body>
 </html>
