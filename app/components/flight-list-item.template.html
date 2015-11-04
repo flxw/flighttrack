@@ -1,45 +1,49 @@
-<md-list-item class="md-2-line">
-  <div class="md-list-item-text" flex layout-padding flex ng-if="!ctrl.isEditing">
+<md-list-item class="md-2-line" ng-if="!ctrl.isEditing" ng-click="ctrl.startEdit()">
+  <div class="md-list-item-text" flex layout-padding flex>
     <h1>&nbsp;&nbsp;{{ flight.origin.code }} /<!-- <i class="material-icons">&#xE5C8;</i>--> {{ flight.destination.code }}</h1>
   </div>
-  <div class="md-list-item-text" flex layout-padding ng-if="!ctrl.isEditing">
-    <p> {{ flight.origin.name }} </p>
-    <p> {{ flight.destination.name }} </p>
+  <div class="md-list-item-text" flex layout-padding>
+    <p><i class="material-icons sub">flight_takeoff</i> {{ flight.origin.city }} / {{ flight.departureTimestamp | date : "dd.MM.yyyy"}}</p>
+    <p><i class="material-icons sub">flight_land</i> {{ flight.destination.city }} / {{ flight.arrivalTimestamp | date : "dd.MM.yyyy"}}</p>
   </div>
-  <div class="md-list-item-text" flex layout-padding layout="row" ng-if="!ctrl.isEditing">
+  <div class="md-list-item-text" flex layout-padding>
     <h1> {{ flight.airline }} </h1>
-    <md-button class="md-primary" ng-click="ctrl.startEdit()">Edit</md-button>
+    <!--<md-button class="md-icon-button  md-secondary" aria-label="More">
+      <md-icon class="material-icons">border_color</md-icon>
+    </md-button>-->
   </div>
+</md-list-item>
 
+<md-list-item class="md-2-line" ng-if="ctrl.isEditing">
   <div class="md-list-item-text" layout="column" flex layout-padding ng-if="ctrl.isEditing">
     <md-input-container flex>
       <label>Origin</label>
-      <md-select ng-model="flight.origin">
-        <md-option ng-repeat="port in ctrl.airports" value={{port}}>{{port.name}} ({{port.code}})</md-option>
+      <md-select ng-model="ctrl.origin">
+        <md-option ng-repeat="port in ctrl.airports">{{port.city}} ({{port.code}})</md-option>
       </md-select>
     </md-input-container>
     <md-input-container flex>
       <label>Departure time</label>
-      <input type="datetime-local" required ng-model="ctrl.departureTime">
+      <input type="datetime-local" ng-model="ctrl.departureTimestamp">
     </md-input-container>
   </div>
   <div class="md-list-item-text" layout="column" layout-padding ng-if="ctrl.isEditing">
     <md-input-container flex>
     <label>Destination</label>
-      <md-select ng-model="ctrl.destinationAirport">
-        <md-option value="{{port}}" ng-repeat="port in ctrl.airports">{{port.name}} ({{port.code}})</md-option>
+      <md-select ng-model="ctrl.destination">
+        <md-option ng-repeat="port in ctrl.airports">{{port.city}} ({{port.code}})</md-option>
       </md-select>
     </md-input-container>
     <md-input-container flex>
       <label>Arrival time</label>
-      <input type="datetime-local" required ng-model="ctrl.arrivalTime">
+      <input type="datetime-local" ng-model="ctrl.arrivalTimestamp">
     </md-input-container>
   </div>
-  <div class="md-list-item-text" layout-padding ng-if="ctrl.isEditing">
+  <div class="md-list-item-text" layout-padding>
     <md-input-container flex>
       <label>Airline</label>
       <input ng-model="ctrl.airline">
     </md-input-container>
-    <md-button class="md-primary center" flex ng-click="ctrl.saveChanges()" style="width:90%">Save </md-button>
+    <md-button class="md-primary center" flex ng-click="ctrl.saveChanges()" style="width:90%">Save</md-button>
   </div>
 </md-list-item>

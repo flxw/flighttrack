@@ -17,6 +17,7 @@
   <style type="text/css">
     .angular-google-map-container { height: 400px; }
     md-input-container { width: 100%; }
+    .sub { vertical-align: sub; }
   </style>
 </head>
 <body ng-controller="someCtrl as sc">
@@ -33,7 +34,7 @@
 <div flex="20"></div>
 
 <div flex="grow" class="md-whiteframe-z1">
-  <md-list>
+  <md-list layout-padding>
     <flight-list-item ng-repeat="flight in flights" flight="flight"></flight-list-item>
   </md-list>
 </div>
@@ -41,10 +42,6 @@
 <div flex="20"></div>
 
 </div>
-
-<md-button class="md-fab md-primary" aria-label="Use Android">
-  <md-icon class="material-icons">add</md-icon>
-</md-button>
 
 <!-- In production use:
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
@@ -62,6 +59,7 @@
 
 <script type="text/javascript" src="app.js"></script>
 <script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="airports.service.js"></script>
 <script type="text/javascript" src="components/flight-list-item.directive.js"></script>
 </body>
 </html>
