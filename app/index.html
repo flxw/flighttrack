@@ -18,11 +18,12 @@
     .angular-google-map-container { height: 400px; }
     md-input-container { width: 100%; }
     .sub { vertical-align: sub; }
+    .bottom-right { position: fixed; right: 23px; bottom: 23px;}
   </style>
 </head>
 <body ng-controller="someCtrl as sc">
-<ui-gmap-google-map center="map.center" zoom="map.zoom" options="map.options">
-  <ui-gmap-polyline ng-repeat="flight in flights"
+<ui-gmap-google-map center="sc.map.center" zoom="sc.map.zoom" options="sc.map.options">
+  <ui-gmap-polyline ng-repeat="flight in sc.flights"
                     path='[flight.origin.coordinates, flight.destination.coordinates]'
                     geodesic='true'>
   </ui-gmap-polyline>
@@ -35,13 +36,17 @@
 
 <div flex="grow" class="md-whiteframe-z1">
   <md-list layout-padding>
-    <flight-list-item ng-repeat="flight in flights" flight="flight"></flight-list-item>
+    <flight-list-item ng-repeat="flight in sc.flights" flight="flight" index="{{$index}}" remove-item="sc.removeFlight($index)"></flight-list-item>
   </md-list>
 </div>
 
 <div flex="20"></div>
 
 </div>
+
+<md-button class="md-fab bottom-right" aria-label="Add a flight" ng-click="sc.addFlight()">
+  <md-icon class="material-icons">add</md-icon>
+</md-button>
 
 <!-- In production use:
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>

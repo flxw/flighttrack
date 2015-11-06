@@ -7,7 +7,7 @@
     <p><i class="material-icons sub">flight_land</i> {{ flight.destination.city }} / {{ flight.arrivalTimestamp | date : "dd.MM.yyyy"}}</p>
   </div>
   <div class="md-list-item-text" flex layout-padding>
-    <h1> {{ flight.airline }} </h1>
+    <h1>{{ flight.airline }}</h1>
     <!--<md-button class="md-icon-button  md-secondary" aria-label="More">
       <md-icon class="material-icons">border_color</md-icon>
     </md-button>-->
@@ -15,7 +15,7 @@
 </md-list-item>
 
 <md-list-item class="md-2-line" ng-if="ctrl.isEditing">
-  <div class="md-list-item-text" layout="column" flex layout-padding ng-if="ctrl.isEditing">
+  <div class="md-list-item-text" layout="column" flex layout-padding>
     <md-input-container flex>
       <label>Origin</label>
       <md-select ng-model="ctrl.origin">
@@ -27,7 +27,7 @@
       <input type="datetime-local" ng-model="ctrl.departureTimestamp">
     </md-input-container>
   </div>
-  <div class="md-list-item-text" layout="column" layout-padding ng-if="ctrl.isEditing">
+  <div class="md-list-item-text" layout="column" layout-padding>
     <md-input-container flex>
     <label>Destination</label>
       <md-select ng-model="ctrl.destination">
@@ -44,6 +44,9 @@
       <label>Airline</label>
       <input ng-model="ctrl.airline">
     </md-input-container>
-    <md-button class="md-primary center" flex ng-click="ctrl.saveChanges()" style="width:90%">Save</md-button>
+    <div layout="columnn">
+      <md-button class="md-primary center" flex ng-click="ctrl.saveChanges()">Save</md-button>
+      <md-button class="center" flex ng-click="ctrl.outboundRemove()">Remove</md-button>
+    </div>
   </div>
 </md-list-item>

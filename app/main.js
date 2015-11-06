@@ -6,21 +6,23 @@ angular
   .module('myApp')
   .controller("someCtrl", someControllerFn);
 
-someControllerFn.$inject = ['$scope', 'uiGmapGoogleMapApi', '$mdDialog'];
+//someControllerFn.$inject = ['$scope'];
 
-function someControllerFn($scope, uiGmapGoogleMapApi, $mdDialog) {
-  $scope.map = {
+function someControllerFn() {
+  var vm = this;
+
+  vm.map = {
     center: {
-      latitude: 30,
-      longitude: 9
+      latitude: 5,
+      longitude: 80
     },
-    zoom: 5,
+    zoom: 2,
     options: {
       disableDefaultUI: true
     }
   };
 
-  $scope.flights = [
+  vm.flights = [
     {
       origin: { code: 'FRA', city: 'Frankfurt', coordinates: { latitude:  50.036512, longitude: 8.558235 } },
       destination: { code:'DXB', city: 'Dubai', coordinates: { latitude: 25.253834, longitude: 55.364814 } },
@@ -50,6 +52,28 @@ function someControllerFn($scope, uiGmapGoogleMapApi, $mdDialog) {
       airline: 'Virgin Air'
     }
   ];
+
+  // add flight here
+  // at top of the list
+  vm.addFlight = addFlight;
+  vm.removeFlight = removeFlight;
+
+  function addFlight() {
+    var nf = {
+      isNew: true,
+      origin: { code: '', city: '', coordinates: { latitude:  0, longitude: 0 } },
+      destination: { code:'', city: '', coordinates: { latitude: 0, longitude: 0 } },
+      departureTimestamp: new Date('2015','01','01'),
+      arrivalTimestamp: new Date('2015','01','01'),
+      airline: ''
+    }
+
+    vm.flights.unshift(nf)
+  }
+
+  function removeFlight(idx) {
+    vm.flights.splice(idx, 1)
+  }
 }
 
 // ------------------------------------
