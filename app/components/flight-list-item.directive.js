@@ -9,7 +9,6 @@ function flightListItemDirective() {
   return {
     bindToController: {
       flight: "=",
-      index: "@",
       removeItem: "&"
     },
     scope: true,
@@ -19,9 +18,9 @@ function flightListItemDirective() {
   }
 }
 
-flightListItemCtrl.$inject = ["$scope", "airports"];
+flightListItemCtrl.$inject = ["$scope", "$timeout", "airports"];
 
-function flightListItemCtrl($scope, airports) {
+function flightListItemCtrl($scope, $timeout, airports) {
   var vm = this;
 
   vm.isEditing = $scope.flight.isNew || false;
@@ -33,32 +32,36 @@ function flightListItemCtrl($scope, airports) {
   vm.airline = $scope.flight.airline;
 
   vm.startEdit   = function() {
-    if (!$scope.isEditing) {
-        vm.isEditing = $scope.isEditing = true
-    }
+    $timeout(function() { // for ripple completion
+      vm.isEditing = true
+    }, 150)
   };
 
   vm.saveChanges = function() {
-    delete $scope.flight.isNew;
-    vm.isEditing = $scope.isEditing = false;
+    $timeout(function() { // for ripple completion
+      delete $scope.flight.isNew;
+      vm.isEditing = $scope.isEditing = false;
 
-    // just get the airport code here
-    $scope.flight.origin.city = vm.origin.substring(0, vm.origin.length-6) // remove outer braces
-    $scope.flight.origin.code = vm.origin.substring(vm.origin.length-4, vm.origin.length-1)
-    $scope.flight.origin.coordinates = getAirportCoordinates($scope.flight.origin.code)
+      // just get the airport code here
+      $scope.flight.origin.city = vm.origin.substring(0, vm.origin.length-6) // remove outer braces
+      $scope.flight.origin.code = vm.origin.substring(vm.origin.length-4, vm.origin.length-1)
+      $scope.flight.origin.coordinates = getAirportCoordinates($scope.flight.origin.code)
 
-    $scope.flight.destination.city = vm.destination.substring(0, vm.destination.length-6) // remove outer braces
-    $scope.flight.destination.code = vm.destination.substring(vm.destination.length-4, vm.destination.length-1)
-    $scope.flight.destination.coordinates = getAirportCoordinates($scope.flight.destination.code)
+      $scope.flight.destination.city = vm.destination.substring(0, vm.destination.length-6) // remove outer braces
+      $scope.flight.destination.code = vm.destination.substring(vm.destination.length-4, vm.destination.length-1)
+      $scope.flight.destination.coordinates = getAirportCoordinates($scope.flight.destination.code)
 
-    $scope.flight.departureTimestamp = vm.departureTimestamp;
-    $scope.flight.arrivalTimestamp = vm.arrivalTimestamp;
+      $scope.flight.departureTimestamp = vm.departureTimestamp;
+      $scope.flight.arrivalTimestamp = vm.arrivalTimestamp;
 
-    $scope.flight.airline = vm.airline
+      $scope.flight.airline = vm.airline
+    }, 150)
   };
 
-  vm.outboundRemove = function() {
-    this.removeItem()
+  vm.outboundRemove = function() { // for ripple completion
+    $timeout(function() {
+      vm.removeItem()
+    }, 150)
   };
 
   function getAirportCoordinates(code) {
