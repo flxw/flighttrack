@@ -31,17 +31,15 @@
 
 
 <div layout="row" layout-padding>
+  <div flex="20"></div>
 
-<div flex="20"></div>
+  <div flex="grow" class="md-whiteframe-z1">
+    <md-list layout-padding>
+      <flight-list-item ng-repeat="flight in sc.flights" flight="flight" index="{{$index}}" remove-item="sc.removeFlight($index)"></flight-list-item>
+    </md-list>
+  </div>
 
-<div flex="grow" class="md-whiteframe-z1">
-  <md-list layout-padding>
-    <flight-list-item ng-repeat="flight in sc.flights" flight="flight" index="{{$index}}" remove-item="sc.removeFlight($index)"></flight-list-item>
-  </md-list>
-</div>
-
-<div flex="20"></div>
-
+  <div flex="20"></div>
 </div>
 
 <md-button class="md-fab bottom-right" aria-label="Add a flight" ng-click="sc.addFlight()">

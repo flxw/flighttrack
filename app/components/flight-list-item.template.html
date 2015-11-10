@@ -16,24 +16,40 @@
 
 <md-list-item class="md-2-line" ng-if="ctrl.isEditing">
   <div class="md-list-item-text" layout="column" flex layout-padding>
-    <md-input-container flex>
-      <label>Origin</label>
-      <md-select ng-model="ctrl.origin">
-        <md-option ng-repeat="port in ctrl.airports">{{port.city}} ({{port.code}})</md-option>
-      </md-select>
-    </md-input-container>
+    <md-autocomplete
+        md-selected-item="ctrl.origin"
+        md-search-text="ctrl.originSearchText"
+        md-items="airport in ctrl.searchAirport(ctrl.originSearchText)"
+        md-item-text="airport.city + ' (' + airport.code + ')'"
+        md-min-length="3"
+        placeholder="Origin airport">
+      <md-item-template>
+        <span md-highlight-text="ctrl.originSearchText" md-highlight-flags="^i">{{airport.city}} ({{airport.code}})</span>
+      </md-item-template>
+      <md-not-found>
+        No airport in "{{ctrl.originSearchText}}""
+      </md-not-found>
+    </md-autocomplete>
     <md-input-container flex>
       <label>Departure time</label>
       <input type="datetime-local" ng-model="ctrl.departureTimestamp">
     </md-input-container>
   </div>
   <div class="md-list-item-text" layout="column" layout-padding>
-    <md-input-container flex>
-    <label>Destination</label>
-      <md-select ng-model="ctrl.destination">
-        <md-option ng-repeat="port in ctrl.airports">{{port.city}} ({{port.code}})</md-option>
-      </md-select>
-    </md-input-container>
+    <md-autocomplete
+        md-selected-item="ctrl.destination"
+        md-search-text="ctrl.destinationSearchText"
+        md-items="airport in ctrl.searchAirport(ctrl.destinationSearchText)"
+        md-item-text="airport.city + ' (' + airport.code + ')'"
+        md-min-length="3"
+        placeholder="Destination airport">
+      <md-item-template>
+        <span md-highlight-text="ctrl.originSearchText" md-highlight-flags="^i">{{airport.city}} ({{airport.code}})</span>
+      </md-item-template>
+      <md-not-found>
+        No airport in "{{ctrl.originSearchText}}""
+      </md-not-found>
+    </md-autocomplete>
     <md-input-container flex>
       <label>Arrival time</label>
       <input type="datetime-local" ng-model="ctrl.arrivalTimestamp">

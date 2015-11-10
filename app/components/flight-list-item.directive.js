@@ -18,38 +18,44 @@ function flightListItemDirective() {
   }
 }
 
-flightListItemCtrl.$inject = ["$scope", "$timeout", "airports"];
+flightListItemCtrl.$inject = ["$scope", "$timeout", "$q", "airports"];
 
-function flightListItemCtrl($scope, $timeout, airports) {
+function flightListItemCtrl($scope, $timeout, $q, airports) {
   var vm = this;
 
   vm.isEditing = $scope.flight.isNew || false;
-  vm.origin = $scope.flight.origin.city + " (" + $scope.flight.origin.code + ")";
-  vm.destination = $scope.flight.destination.city + " (" + $scope.flight.destination.code + ")";
+  vm.origin = $scope.flight.origin;
+  vm.destination = $scope.flight.destination;
   vm.airports = airports;
   vm.departureTimestamp = $scope.flight.departureTimestamp;
   vm.arrivalTimestamp = $scope.flight.arrivalTimestamp;
   vm.airline = $scope.flight.airline;
 
-  vm.startEdit   = function() {
-    $timeout(function() { // for ripple completion
-      vm.isEditing = true
-    }, 150)
+  vm.destinationSearchText = "";
+  vm.originSearchText = "";
+
+  vm.startEdit   = function() { $timeout(function() { vm.isEditing = true }, 150) };
+  vm.outboundRemove = function() { $timeout(function() { vm.removeItem() }, 150) };
+
+  vm.saveChanges = saveChanges;
+  vm.searchAirport = searchAirport;
+
+  function getAirportCoordinates(code) {
+    var port = airports.find(function(e,i,a) {
+      return e.code == code
+    });
+
+    return port.coordinates;
   };
 
-  vm.saveChanges = function() {
+  function saveChanges() {
     $timeout(function() { // for ripple completion
       delete $scope.flight.isNew;
       vm.isEditing = $scope.isEditing = false;
 
       // just get the airport code here
-      $scope.flight.origin.city = vm.origin.substring(0, vm.origin.length-6) // remove outer braces
-      $scope.flight.origin.code = vm.origin.substring(vm.origin.length-4, vm.origin.length-1)
-      $scope.flight.origin.coordinates = getAirportCoordinates($scope.flight.origin.code)
-
-      $scope.flight.destination.city = vm.destination.substring(0, vm.destination.length-6) // remove outer braces
-      $scope.flight.destination.code = vm.destination.substring(vm.destination.length-4, vm.destination.length-1)
-      $scope.flight.destination.coordinates = getAirportCoordinates($scope.flight.destination.code)
+      $scope.flight.origin = vm.origin;
+      $scope.flight.destination = vm.destination;
 
       $scope.flight.departureTimestamp = vm.departureTimestamp;
       $scope.flight.arrivalTimestamp = vm.arrivalTimestamp;
@@ -58,18 +64,22 @@ function flightListItemCtrl($scope, $timeout, airports) {
     }, 150)
   };
 
-  vm.outboundRemove = function() { // for ripple completion
+  function searchAirport(searchString) {
+    var deferred = $q.defer()
+
     $timeout(function() {
-      vm.removeItem()
-    }, 150)
+      var results = searchString ? airports.filter( createFilterFor(searchString) ) : airports;
+      deferred.resolve(results);
+    }, 200);
+
+    return deferred.promise
   };
 
-  function getAirportCoordinates(code) {
-    var port = airports.find(function(e,i,a) {
-      return e.code == code
-    });
-
-    return port.coordinates;
+  function createFilterFor(query) {
+    var lowercaseQuery = angular.lowercase(query);
+    return function filterFn(airport) {
+      return (angular.lowercase(airport.city).indexOf(lowercaseQuery) === 0);
+    };
   };
 }
 })()
