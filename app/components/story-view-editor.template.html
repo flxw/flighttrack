@@ -1,0 +1,25 @@
+<section class="layout-align-center-center layout-row">
+  <md-button class="md-primary" ng-click="sveCtrl.goBack()" ng-disabled="sveCtrl.isEditing">back</md-button>
+  <md-button class="md-primary" ng-if="!sveCtrl.isEditing" ng-click="sveCtrl.edit()">modify trip</md-button>
+  <md-button class="md-primary" ng-if="sveCtrl.isEditing" ng-click="sveCtrl.saveChanges()">save trip</md-button>
+  <md-button class="md-primary" ng-if="sveCtrl.isEditing" ng-click="sveCtrl.cancelChanges()">cancel</md-button>
+  <md-button class="md-primary" ng-if="!sveCtrl.isEditing" ng-disabled="true">delete</md-button>
+</section>
+
+<div layout-padding ng-if="!sveCtrl.isEditing">
+  <h1>{{ sveCtrl.trip.destination.name }}</h1>
+  <p>{{ sveCtrl.trip.startDate | date : "dd.MM.yyyy"}} -- {{ sveCtrl.trip.endDate | date : "dd.MM.yyyy"}}</p>
+  <div marked="sveCtrl.trip.storyMarkdown"></div>
+</div>
+
+<div layout-padding ng-if="sveCtrl.isEditing">
+  <md-input-container>
+    <label>Destination</label>
+    <input ng-model="sveCtrl.trip.destination.name">
+  </md-input-container>
+
+  <md-input-container class="md-block">
+    <label>Story (formatted in Markdown)</label>
+    <textarea rows="10" class="markdown-content-editor" ng-model="sveCtrl.trip.storyMarkdown"></textarea>
+  </md-input-container>
+</div>

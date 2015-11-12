@@ -15,22 +15,32 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons" async>
   <link rel="stylesheet" type="text/css" href="style/main.css" async>
 </head>
-<body ng-controller="someCtrl as sc" layout="row">
-<md-content class="sidebar md-whiteframe-6dp" flex="33" layout-padding>
-  <div class="top-profile">
+<body layout="row" ng-controller="BadCtrl as badCtrl">
+
+<md-content class="sidebar md-whiteframe-6dp" flex="33">
+  <div class="top-profile" layout-padding>
     <img src="http://placehold.it/350x150">
     <div class="feature-box">
       <h1>Lukas Faber</h1>
     </div>
   </div>
-  <trip-story-list></trip-story-list>
+  <br>
+
+  <section class="layout-align-center-center layout-row" ng-if="badCtrl.selectedTripIndex == null">
+    <md-button class="md-primary">add trip</md-button>
+  </section>
+
+  <md-list layout-padding ng-if="badCtrl.selectedTripIndex == null">
+    <md-list-item ng-repeat="trip in badCtrl.trips" ng-click="badCtrl.selectTrip($index)">
+      <span class="trip-destination">{{ trip.destination.name }}</span>
+      <span class="trip-duration">{{ trip.startDate | date : "dd.MM.yyyy" }} -- {{ trip.endDate | date : "dd.MM.yyyy" }}</span>
+    </md-list-item>
+  </md-list>
+
+  <story-view-editor trip-id="badCtrl.selectedTripIndex" ng-if="badCtrl.selectedTripIndex != null"></story-view-editor>
 </md-content>
 
-<ui-gmap-google-map center="sc.map.center" zoom="sc.map.zoom" options="sc.map.options" flex>
-  <ui-gmap-polyline ng-repeat="flight in sc.flights"
-                    path='[flight.origin.coordinates, flight.destination.coordinates]'
-                    geodesic='true'>
-  </ui-gmap-polyline>
+<ui-gmap-google-map center="badCtrl.map.center" zoom="badCtrl.map.zoom" options="badCtrl.map.options" flex>
 </ui-gmap-google-map>
 
 <!-- In production use:
@@ -51,7 +61,8 @@
 <script type="text/javascript" src="libs/angular-material/angular-material.js"></script>
 
 <script type="text/javascript" src="app.js"></script>
-<script type="text/javascript" src="main.js"></script>
-<script type="text/javascript" src="components/trip-story-list.directive.js"></script>
+<script type="text/javascript" src="bad-ctrl.js"></script>
+<script type="text/javascript" src="trips.service.js"></script>
+<script type="text/javascript" src="components/story-view-editor.directive.js"></script>
 </body>
 </html>
