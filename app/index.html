@@ -13,38 +13,25 @@
 
   <link rel="stylesheet" type="text/css" href="libs/angular-material/angular-material.min.css" async>
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons" async>
-
-  <style type="text/css">
-    .angular-google-map-container { height: 400px; }
-    md-input-container { width: 100%; }
-    .sub { vertical-align: sub; }
-    .bottom-right { position: fixed; right: 23px; bottom: 23px;}
-  </style>
+  <link rel="stylesheet" type="text/css" href="style/main.css" async>
 </head>
-<body ng-controller="someCtrl as sc">
-<ui-gmap-google-map center="sc.map.center" zoom="sc.map.zoom" options="sc.map.options">
+<body ng-controller="someCtrl as sc" layout="row">
+<md-content class="sidebar md-whiteframe-6dp" flex="33" layout-padding>
+  <div class="top-profile">
+    <img src="http://placehold.it/350x150">
+    <div class="feature-box">
+      <h1>Lukas Faber</h1>
+    </div>
+  </div>
+  <trip-story-list></trip-story-list>
+</md-content>
+
+<ui-gmap-google-map center="sc.map.center" zoom="sc.map.zoom" options="sc.map.options" flex>
   <ui-gmap-polyline ng-repeat="flight in sc.flights"
                     path='[flight.origin.coordinates, flight.destination.coordinates]'
                     geodesic='true'>
   </ui-gmap-polyline>
 </ui-gmap-google-map>
-
-
-<div layout="row" layout-padding>
-  <div flex="20"></div>
-
-  <div flex="grow" class="md-whiteframe-z1">
-    <md-list layout-padding>
-      <flight-list-item ng-repeat="flight in sc.flights" flight="flight" index="{{$index}}" remove-item="sc.removeFlight($index)"></flight-list-item>
-    </md-list>
-  </div>
-
-  <div flex="20"></div>
-</div>
-
-<md-button class="md-fab bottom-right" aria-label="Add a flight" ng-click="sc.addFlight()">
-  <md-icon class="material-icons">add</md-icon>
-</md-button>
 
 <!-- In production use:
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
@@ -52,6 +39,9 @@
 <script type="text/javascript" src="libs/angular/angular.js"></script>
 <script type="text/javascript" src="libs/angular-route/angular-route.js"></script>
 <script type="text/javascript" src="libs/lodash/lodash.min.js" ></script>
+
+<script type="text/javascript" src="libs/marked/lib/marked.js"></script>
+<script type="text/javascript" src="libs/angular-marked/dist/angular-marked.js"></script>
 
 <script type="text/javascript" src="libs/angular-messages/angular-messages.js"></script>
 <script type="text/javascript" src="libs/angular-animate/angular-animate.js"></script>
@@ -62,7 +52,6 @@
 
 <script type="text/javascript" src="app.js"></script>
 <script type="text/javascript" src="main.js"></script>
-<script type="text/javascript" src="airports.service.js"></script>
-<script type="text/javascript" src="components/flight-list-item.directive.js"></script>
+<script type="text/javascript" src="components/trip-story-list.directive.js"></script>
 </body>
 </html>
