@@ -32,7 +32,7 @@
 
   <md-list layout-padding ng-if="badCtrl.selectedTripIndex == null">
     <md-list-item ng-repeat="trip in badCtrl.trips" ng-click="badCtrl.selectTrip($index)">
-      <span class="story-title">{{ trip.destination.name }}</span>
+      <h1 class="story-title">{{ trip.destination.name }}</h1>
       <span class="story-dates">{{ trip.startDate | date : "dd.MM.yyyy" }} - {{ trip.endDate | date : "dd.MM.yyyy" }}</span>
     </md-list-item>
   </md-list>
