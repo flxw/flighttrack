@@ -1,14 +1,15 @@
 <section class="layout-align-center-center layout-row">
   <md-button class="md-primary" ng-click="sveCtrl.goBack()" ng-disabled="sveCtrl.isEditing">back</md-button>
-  <md-button class="md-primary" ng-if="!sveCtrl.isEditing" ng-click="sveCtrl.edit()">modify trip</md-button>
-  <md-button class="md-primary" ng-if="sveCtrl.isEditing" ng-click="sveCtrl.saveChanges()">save trip</md-button>
+  <md-button class="md-primary" ng-if="!sveCtrl.isEditing" ng-click="sveCtrl.edit()">modify</md-button>
+  <md-button class="md-primary" ng-if="sveCtrl.isEditing" ng-click="sveCtrl.saveChanges()">save</md-button>
   <md-button class="md-primary" ng-if="sveCtrl.isEditing" ng-click="sveCtrl.cancelChanges()">cancel</md-button>
   <md-button class="md-primary" ng-if="!sveCtrl.isEditing" ng-disabled="true">delete</md-button>
 </section>
 
-<div layout-padding ng-if="!sveCtrl.isEditing">
-  <h1>{{ sveCtrl.trip.destination.name }}</h1>
-  <p>{{ sveCtrl.trip.startDate | date : "dd.MM.yyyy"}} -- {{ sveCtrl.trip.endDate | date : "dd.MM.yyyy"}}</p>
+<div class="story-view" ng-if="!sveCtrl.isEditing">
+  <h1 class="story-title">{{ sveCtrl.trip.destination.name }}</h1>
+  <span class="story-dates">{{ sveCtrl.trip.startDate | date : "dd.MM.yyyy"}} - {{ sveCtrl.trip.endDate | date : "dd.MM.yyyy"}}</span>
+  <md-divider></md-divider>
   <div marked="sveCtrl.trip.storyMarkdown"></div>
 </div>
 

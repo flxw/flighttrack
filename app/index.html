@@ -13,6 +13,7 @@
 
   <link rel="stylesheet" type="text/css" href="libs/angular-material/angular-material.min.css" async>
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons" async>
+  <link rel='stylesheet' type='text/css' href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic" async>
   <link rel="stylesheet" type="text/css" href="style/main.css" async>
 </head>
 <body layout="row" ng-controller="BadCtrl as badCtrl">
@@ -24,7 +25,6 @@
       <h1>Lukas Faber</h1>
     </div>
   </div>
-  <br>
 
   <section class="layout-align-center-center layout-row" ng-if="badCtrl.selectedTripIndex == null">
     <md-button class="md-primary">add trip</md-button>
@@ -32,8 +32,8 @@
 
   <md-list layout-padding ng-if="badCtrl.selectedTripIndex == null">
     <md-list-item ng-repeat="trip in badCtrl.trips" ng-click="badCtrl.selectTrip($index)">
-      <span class="trip-destination">{{ trip.destination.name }}</span>
-      <span class="trip-duration">{{ trip.startDate | date : "dd.MM.yyyy" }} -- {{ trip.endDate | date : "dd.MM.yyyy" }}</span>
+      <span class="story-title">{{ trip.destination.name }}</span>
+      <span class="story-dates">{{ trip.startDate | date : "dd.MM.yyyy" }} - {{ trip.endDate | date : "dd.MM.yyyy" }}</span>
     </md-list-item>
   </md-list>
 
