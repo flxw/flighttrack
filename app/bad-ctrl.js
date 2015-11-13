@@ -29,6 +29,7 @@ function badCtrl(tripService) {
   vm.selectTrip = function(index) {
     vm.selectedTripIndex = index;
     vm.map.center = vm.trips[vm.selectedTripIndex].destination.coordinates
+    vm.map.zoom = 9
   }
 };
 
