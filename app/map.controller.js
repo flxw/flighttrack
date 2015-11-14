@@ -6,29 +6,40 @@
     .module('myApp')
     .controller("MapController", MapController);
 
-  MapController.$inject = ["$scope", "tripService", "uiGmapGoogleMapApi"];
+  MapController.$inject = ["$timeout", "tripService", "uiGmapGoogleMapApi"];
 
-function MapController($scope, tripService, gmapApi) {
+function MapController($timeout, tripService, gmapApi) {
   var vm = this;
 
   vm.options = {
-    disableDefaultUI: true
+    disableDefaultUI: true,
+    minZoom: 3
   };
-  vm.zoom = 7;
+  vm.zoom = 3;
   vm.pan = true;
-  $scope.boundaries = tripService.coordinateBoundaries;
-  vm.center = { latitude: 0, longitude: 0 };
   vm.control = {};
+  vm.center = { latitude: 0, longitude: 0 };
 
-  $scope.$watch('boundaries', function() {
-    gmapApi.then(function(maps) {
-      var northEast = new google.maps.LatLng($scope.boundaries.northeast.latitude, $scope.boundaries.northeast.longitude);
-      var southWest = new google.maps.LatLng($scope.boundaries.southwest.latitude, $scope.boundaries.southwest.longitude);
+  tripService.updateCoordinateCallback = updateCoordinateView;
+
+  function updateCoordinateView() {
+    gmapApi.then(function() {
+      var northEast = new google.maps.LatLng(tripService.coordinates.boundaries.northeast.latitude, tripService.coordinates.boundaries.northeast.longitude);
+      var southWest = new google.maps.LatLng(tripService.coordinates.boundaries.southwest.latitude, tripService.coordinates.boundaries.southwest.longitude);
       var bounds = new google.maps.LatLngBounds(southWest,northEast);
+
       vm.control.getGMap().fitBounds(bounds);
+
+      if (tripService.isTripSelected()) {
+        var center = new google.maps.LatLng(tripService.coordinates.center.latitude, tripService.coordinates.center.longitude);
+        vm.zoom = 10;
+        vm.control.getGMap().panTo(center);
+      }
     });
-  })
-};
+  };
+
+  $timeout(updateCoordinateView,1000);
+}
 
 // ------------------------------------
 })();

@@ -11,9 +11,9 @@ function tripService() {
 
   s.trips = [
     {
-      destination: { name: 'Dubai', coordinates: { latitude: 25.253834, longitude: 55.364814 } },
-      startDate: new Date(2015, 7, 14),
-      endDate: new Date(2015, 7, 15),
+      destination: { name: 'Sydney', coordinates: { latitude: 25.253834, longitude: 55.364814 } },
+      startDate: new Date(2016, 2, 14),
+      endDate: new Date(2016, 2, 15),
       stops: []
     },
     {
@@ -21,10 +21,18 @@ function tripService() {
       startDate: new Date(2015, 10, 14),
       endDate: new Date(2015, 10, 15),
       stops: []
+    },
+    {
+      destination: { name: 'Brisbane', coordinates: { latitude: -27.4790396, longitude: 152.4423969 } },
+      startDate: new Date(2015, 10, 14),
+      endDate: new Date(2015, 10, 16),
+      stops: []
     }
   ];
 
-  recalculateBounds();
+  s.coordinates = {};
+
+  s.updateCoordinateCallback = function() {};
 
   s.changeCurrentTrip = function(t) {
     s.trips[selectedTripIndex] = t;
@@ -32,11 +40,15 @@ function tripService() {
 
   s.selectTrip = function(index) {
     selectedTripIndex = index;
-    recalculateBounds();
+    recalculateCoordinates()
   };
 
   s.getCurrentTripCopy = function() {
     return _.cloneDeep(s.trips[selectedTripIndex])
+  }
+
+  s.getCurrentTripRef = function() {
+    return s.trips[selectedTripIndex]
   }
 
   s.isTripSelected = function() {
@@ -60,7 +72,7 @@ function tripService() {
     var longitudes = _.map(coordinateLoop, 'longitude');
 
     // reset boundary
-    s.coordinateBoundaries = {
+    s.coordinates.boundaries = {
       northeast: {
         latitude: _.max(latitudes),
         longitude: _.max(longitudes)
@@ -71,6 +83,22 @@ function tripService() {
       }
     };
   }
+
+  function recalculateCenter() {
+    if (selectedTripIndex !== null) {
+      s.coordinates.center = s.trips[selectedTripIndex].destination.coordinates
+    } else {
+      s.coordinates.center = { latitude: 0, longitude: 0 }
+    }
+  }
+
+  function recalculateCoordinates() {
+    recalculateBounds();
+    recalculateCenter();
+    s.updateCoordinateCallback();
+  }
+
+  recalculateCoordinates()
 
   return s;
 }
