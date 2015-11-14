@@ -25,7 +25,6 @@ function tripService() {
   ];
 
   recalculateBounds();
-  recalculateCenter();
 
   s.changeCurrentTrip = function(t) {
     s.trips[selectedTripIndex] = t;
@@ -34,7 +33,6 @@ function tripService() {
   s.selectTrip = function(index) {
     selectedTripIndex = index;
     recalculateBounds();
-    recalculateCenter();
   };
 
   s.getCurrentTripCopy = function() {
@@ -72,14 +70,6 @@ function tripService() {
         longitude: _.min(longitudes)
       }
     };
-  }
-
-  function recalculateCenter() {
-    if (selectedTripIndex !== null) {
-      s.coordinateCenter = s.trips[selectedTripIndex].destination.coordinates
-    } else {
-      s.coordinateCenter = { latitude: 0, longitude: 0 }
-    }
   }
 
   return s;
