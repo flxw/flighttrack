@@ -6,9 +6,6 @@
 
   function storyViewEditorDirective() {
     return {
-      bindToController: {
-        tripId: "="
-      },
       scope: true,
       controller: storyViewEditorCtrl,
       controllerAs: "sveCtrl",
@@ -21,12 +18,12 @@
   function storyViewEditorCtrl(tripService) {
     var vm = this;
 
-    vm.isEditing = false
-    vm.trip = _.cloneDeep(tripService.trips[vm.tripId]);
+    vm.isEditing = false;
+    vm.trip = tripService.getCurrentTripCopy();
 
-    vm.goBack = function() { vm.tripId = null }
+    vm.goBack = function() { tripService.selectTrip(null); }
     vm.edit = function() { vm.isEditing = true }
-    vm.saveChanges = function() { vm.isEditing = false; tripService.changeTrip(vm.tripId, vm.trip) }
-    vm.cancelChanges = function() { vm.isEditing = false; vm.trip = tripService.trips[vm.tripId] }
+    vm.saveChanges = function() { vm.isEditing = false; tripService.changeCurrentTrip(vm.trip) }
+    vm.cancelChanges = function() { vm.isEditing = false; vm.trip = tripService.getCurrentTripCopy(); }
   }
 })()
