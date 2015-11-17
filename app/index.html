@@ -47,6 +47,9 @@
                       options="mapCtrl.options"
                       pan="mapCtrl.pan"
                       control="mapCtrl.control">
+    <ui-gmap-markers models="mapCtrl.trips" coords="'destination.coordinates'" idKey="destination.name">
+
+    </ui-gmap-markers>
   </ui-gmap-google-map>
 </section>
 
@@ -71,6 +74,7 @@
 <script type="text/javascript" src="bad-ctrl.js"></script>
 <script type="text/javascript" src="map.controller.js"></script>
 <script type="text/javascript" src="trips.service.js"></script>
+<script type="text/javascript" src="places.service.js"></script>
 <script type="text/javascript" src="components/story-view-editor.directive.js"></script>
 </body>
 </html>

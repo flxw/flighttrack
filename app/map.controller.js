@@ -19,6 +19,7 @@ function MapController($timeout, tripService, gmapApi) {
   vm.pan = true;
   vm.control = {};
   vm.center = { latitude: 0, longitude: 0 };
+  vm.trips = tripService.trips;
 
   tripService.updateCoordinateCallback = updateCoordinateView;
 

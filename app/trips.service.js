@@ -11,7 +11,7 @@ function tripService() {
 
   s.trips = [
     {
-      destination: { name: 'Sydney', coordinates: { latitude: 25.253834, longitude: 55.364814 } },
+      destination: { name: 'Dubai', coordinates: { latitude: 25.253834, longitude: 55.364814 } },
       startDate: new Date(2016, 2, 14),
       endDate: new Date(2016, 2, 15),
       stops: []

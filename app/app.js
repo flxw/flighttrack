@@ -12,7 +12,7 @@ function config(GoogleMapApiProviders) {
   GoogleMapApiProviders.configure({
     key: 'AIzaSyD0lPD-ReozzrAEWR4eFKv6v0OzEp0bMWE',
     v: '3.20',
-    libraries: 'geometry'
+    libraries: 'geometry,places'
   });
 }
 

@@ -14,10 +14,25 @@
 </div>
 
 <div layout-padding ng-if="sveCtrl.isEditing">
-  <md-input-container>
-    <label>Destination</label>
-    <input ng-model="sveCtrl.trip.destination.name">
-  </md-input-container>
+  <md-autocomplete flex
+    md-selected-item="sveCtrl.trip.destination"
+    md-search-text="sveCtrl.destinationSearch.text"
+    md-items="item in sveCtrl.destinationSearch.query(sveCtrl.destinationSearch.text)"
+    md-item-text="item.name"
+    md-min-length="4"
+    placeholder="Your destination">
+    <md-item-template>
+      <span md-highlight-text="sveCtrl.destinationSearch.text" md-highlight-flags="^i">{{item.name}}</span>
+    </md-item-template>
+    <md-not-found>
+      No states matching destination found...
+    </md-not-found>
+  </md-autocomplete>
+
+  <div layout="row">
+    <md-datepicker flex ng-model="sveCtrl.trip.startDate" md-placeholder="Start date"></md-datepicker>
+    <md-datepicker flex ng-model="sveCtrl.trip.startDate" md-placeholder="Start date"></md-datepicker>
+  </div>
 
   <md-input-container class="md-block">
     <label>Story (formatted in Markdown)</label>
