@@ -3,34 +3,20 @@
 // ------------------------------------
 angular
   .module("myApp")
-  .factory("tripService", tripService)
+  .factory("tripService", tripService);
 
-function tripService() {
+tripService.$inject = ["$http"];
+
+function tripService($http) {
   var s = {};
   var selectedTripIndex = null;
-
-  s.trips = [
-    {
-      destination: { name: 'Dubai', coordinates: { latitude: 25.253834, longitude: 55.364814 } },
-      startDate: new Date(2016, 2, 14),
-      endDate: new Date(2016, 2, 15),
-      stops: []
-    },
-    {
-      destination: { name: 'Melbourne', coordinates: { latitude: -37.8589546, longitude: 144.5191752 } },
-      startDate: new Date(2015, 10, 14),
-      endDate: new Date(2015, 10, 15),
-      stops: []
-    },
-    {
-      destination: { name: 'Brisbane', coordinates: { latitude: -27.4790396, longitude: 152.4423969 } },
-      startDate: new Date(2015, 10, 14),
-      endDate: new Date(2015, 10, 16),
-      stops: []
-    }
-  ];
+  var trips = [];
 
   s.coordinates = {};
+
+  s.getTrips = function() {
+    return s.trips;
+  };
 
   s.updateCoordinateCallback = function() {};
 
@@ -54,6 +40,20 @@ function tripService() {
   s.isTripSelected = function() {
     return selectedTripIndex !== null;
   }
+
+  s.loadTrips = function() {
+    $http.get('/trips', { reponseType: 'json' })
+      .then(function(res) {
+        s.trips = res.data;
+
+        for (var i = 0, j = res.data.length; i < j; ++i) {
+          s.trips[i].dates.start = new Date(s.trips[i].dates.start)
+          s.trips[i].dates.end = new Date(s.trips[i].dates.end)
+        }
+
+        recalculateCoordinates();
+      })
+  };
 
   function recalculateBounds() {
     var coordinateLoop = [];
@@ -98,7 +98,7 @@ function tripService() {
     s.updateCoordinateCallback();
   }
 
-  recalculateCoordinates()
+  s.loadTrips();
 
   return s;
 }

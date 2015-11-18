@@ -6,9 +6,9 @@
     .module('myApp')
     .controller("MapController", MapController);
 
-  MapController.$inject = ["$timeout", "tripService", "uiGmapGoogleMapApi"];
+  MapController.$inject = ["tripService", "uiGmapGoogleMapApi"];
 
-function MapController($timeout, tripService, gmapApi) {
+function MapController(tripService, gmapApi) {
   var vm = this;
 
   vm.options = {
@@ -19,7 +19,7 @@ function MapController($timeout, tripService, gmapApi) {
   vm.pan = true;
   vm.control = {};
   vm.center = { latitude: 0, longitude: 0 };
-  vm.trips = tripService.trips;
+  vm.getTrips = tripService.getTrips;
 
   tripService.updateCoordinateCallback = updateCoordinateView;
 
@@ -39,7 +39,7 @@ function MapController($timeout, tripService, gmapApi) {
     });
   };
 
-  $timeout(updateCoordinateView,1000);
+//  $timeout(updateCoordinateView,1000);
 }
 
 // ------------------------------------

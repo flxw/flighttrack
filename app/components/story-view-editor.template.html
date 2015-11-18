@@ -8,7 +8,7 @@
 
 <div class="story-view" ng-if="!sveCtrl.isEditing">
   <h1 class="story-title">{{ sveCtrl.trip.destination.name }}</h1>
-  <span class="story-dates">{{ sveCtrl.trip.startDate | date : "dd.MM.yyyy"}} - {{ sveCtrl.trip.endDate | date : "dd.MM.yyyy"}}</span>
+  <span class="story-dates">{{ sveCtrl.trip.dates.start | date : "dd.MM.yyyy"}} - {{ sveCtrl.trip.dates.end | date : "dd.MM.yyyy"}}</span>
   <md-divider></md-divider>
   <div marked="sveCtrl.trip.storyMarkdown"></div>
 </div>
@@ -29,9 +29,9 @@
     </md-not-found>
   </md-autocomplete>
 
-  <div layout="row">
-    <md-datepicker flex ng-model="sveCtrl.trip.startDate" md-placeholder="Start date"></md-datepicker>
-    <md-datepicker flex ng-model="sveCtrl.trip.startDate" md-placeholder="Start date"></md-datepicker>
+  <div layout="row" layout-padding>
+    <md-datepicker flex ng-model="sveCtrl.trip.dates.start" md-placeholder="Start date"></md-datepicker>
+    <md-datepicker flex ng-model="sveCtrl.trip.dates.end"   md-placeholder="End date"></md-datepicker>
   </div>
 
   <md-input-container class="md-block">

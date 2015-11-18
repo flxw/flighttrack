@@ -4,9 +4,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var stylus = require("stylus");
+var mongoose = require('mongoose');
+
+var config = require('./config');
 
 var app  = express();
 var port = process.env.PORT || '3000';
+
+mongoose.connect(config.database.url);
 
 
 // uncomment after placing your favicon in /public
@@ -39,6 +44,8 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+require('./routes/trips')(app)
 
 
 app.listen(port)

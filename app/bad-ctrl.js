@@ -10,8 +10,7 @@ badCtrl.$inject = ["tripService"];
 
 function badCtrl(tripService) {
   var vm = this;
-
-  vm.trips = tripService.trips;
+  vm.getTrips = tripService.getTrips;
   vm.selectTrip = tripService.selectTrip;
   vm.isTripSelected = tripService.isTripSelected;
 };
