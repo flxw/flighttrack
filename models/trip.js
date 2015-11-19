@@ -12,7 +12,14 @@ var tripSchema = new mongoose.Schema({
   dates: {
     start: Date,
     end: Date
-  }
+  },
+  images: [ {
+    buffer: Buffer,
+    encoding: String,
+    mimetype: String,
+    originalname: String,
+    size: Number
+  } ]
 });
 
 module.exports = mongoose.model('Trip', tripSchema)

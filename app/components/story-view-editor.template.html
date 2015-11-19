@@ -14,7 +14,7 @@
 </div>
 
 <div layout-padding ng-if="sveCtrl.isEditing">
-  <md-autocomplete flex
+  <md-autocomplete flex layout-margin
     md-selected-item="sveCtrl.trip.destination"
     md-search-text="sveCtrl.destinationSearch.text"
     md-items="item in sveCtrl.destinationSearch.query(sveCtrl.destinationSearch.text)"
@@ -29,12 +29,39 @@
     </md-not-found>
   </md-autocomplete>
 
-  <div layout="row" layout-padding>
+  <div layout="row" layout-margin>
     <md-datepicker flex ng-model="sveCtrl.trip.dates.start" md-placeholder="Start date"></md-datepicker>
     <md-datepicker flex ng-model="sveCtrl.trip.dates.end"   md-placeholder="End date"></md-datepicker>
   </div>
 
-  <md-input-container class="md-block">
+  <md-divider></md-divider>
+
+  <md-list>
+    <md-subheader layout-padding>
+      Story images
+      <md-button
+        class="md-icon-button"
+        aria-label="Upload"
+        ng-model="sveCtrl.upload.image"
+        ngf-select="sveCtrl.uploadImage(sveCtrl.upload.image)"
+        ngf-keep="false"
+        ngf-multiple="false"
+        ngf-max-size="5MB">
+        <md-icon class="material-icons">add</md-icon>
+      </md-button>
+      <md-progress-linear md-mode="determinate" value="{{ sveCtrl.upload.progress }}" ng-hide="sveCtrl.upload.hidden"></md-progress-linear>
+    </md-subheader>
+    <md-list-item class="md-1-line" ng-repeat="image in sveCtrl.trip.images">
+      <img ng-src="{{ image.src }}" class="md-avatar" alt="{{image.name}}" />
+      <div class="md-list-item-text" layout="column">
+        <h3>{{ image.name }}</h3>
+      </div>
+    </md-list-item>
+  </md-list>
+
+  <md-divider></md-divider>
+
+  <md-input-container class="md-block" layout-padding>
     <label>Story (formatted in Markdown)</label>
     <textarea rows="10" class="markdown-content-editor" ng-model="sveCtrl.trip.storyMarkdown"></textarea>
   </md-input-container>

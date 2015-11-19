@@ -3,7 +3,7 @@
 // ------------------------------------
 
 angular
-  .module('myApp', ['uiGmapgoogle-maps', 'ngMaterial', 'ngMessages', 'hc.marked'])
+  .module('myApp', ['uiGmapgoogle-maps', 'ngMaterial', 'ngMessages', 'hc.marked', 'ngFileUpload'])
   .config(config);
 
 config.$inject = ['uiGmapGoogleMapApiProvider'];

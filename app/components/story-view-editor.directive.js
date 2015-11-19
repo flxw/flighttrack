@@ -13,12 +13,13 @@
     }
   }
 
-  storyViewEditorCtrl.$inject = ["tripService", "PlacesService"];
+  storyViewEditorCtrl.$inject = ["tripService", "PlacesService", "Upload"];
 
-  function storyViewEditorCtrl(tripService,  placesService) {
+  function storyViewEditorCtrl(tripService,  placesService, Upload) {
     var vm = this;
 
     vm.isEditing = false;
+    vm.upload  = { hidden: true, progress: 0, image: '' };
     vm.trip = tripService.getCurrentTripCopy();
 
     vm.goBack = function () {
@@ -34,6 +35,16 @@
     vm.cancelChanges = function () {
       vm.isEditing = false;
       vm.trip = tripService.getCurrentTripCopy();
+    }
+
+    vm.uploadImage = function(image) {
+      vm.upload.hidden = false;
+      Upload.upload({
+        url: '/trips/img',
+        data: { image: image, 'id': vm.trip._id }
+      })
+        .progress(function(evt) { vm.upload.value = 100 * evt.loaded / evt.total })
+        .finally(function() { vm.upload.hidden = true; })
     }
 
     vm.destinationSearch = {
