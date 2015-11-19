@@ -13,7 +13,7 @@
   <div marked="sveCtrl.trip.storyMarkdown"></div>
 </div>
 
-<div layout-padding ng-if="sveCtrl.isEditing">
+<div class="story-editor" layout-padding ng-if="sveCtrl.isEditing">
   <md-autocomplete flex layout-margin
     md-selected-item="sveCtrl.trip.destination"
     md-search-text="sveCtrl.destinationSearch.text"
@@ -49,12 +49,15 @@
         ngf-max-size="5MB">
         <md-icon class="material-icons">add</md-icon>
       </md-button>
-      <md-progress-linear md-mode="determinate" value="{{ sveCtrl.upload.progress }}" ng-hide="sveCtrl.upload.hidden"></md-progress-linear>
+      <md-progress-linear md-mode="determinate" value="{{ sveCtrl.upload.progress }}"></md-progress-linear>
     </md-subheader>
     <md-list-item class="md-1-line" ng-repeat="image in sveCtrl.trip.images">
-      <img ng-src="{{ image.src }}" class="md-avatar" alt="{{image.name}}" />
-      <div class="md-list-item-text" layout="column">
-        <h3>{{ image.name }}</h3>
+      <img ng-src="/trip/img/{{ image }}" class="md-avatar" />
+      <div class="md-list-item-text" layout="row">
+        <h3 flex>{{ image }}</h3>
+        <md-button class="right-control md-icon-button" ng-click="sveCtrl.deleteImage(image, $index)">
+          <md-icon class="material-icons">delete</md-icon>
+        </md-button>
       </div>
     </md-list-item>
   </md-list>

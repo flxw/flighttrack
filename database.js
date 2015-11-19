@@ -6,7 +6,7 @@ var winston    = require('winston');
 
 
 var Trip = require('./models/trip.js');
-
+var Image = require('./models/image.js')
 
 exports.getTripStream = function() {
   return Trip.find().stream()
@@ -14,11 +14,62 @@ exports.getTripStream = function() {
 
 exports.addTripImage = function(tripId, image) {
   var deferred = q.defer();
+  var img      = new Image(image);
 
-  Trip.findByIdAndUpdate(tripId, { $push: { images: image }}, function (err) {
-    if (err) { winston.error(err); deferred.reject(err) }
-    else { deferred.resolve() }
+  // save image to db
+  img.save(image, function(err, savedImg) {
+
+    // append image id to trip afterwards
+    Trip.findByIdAndUpdate(tripId, { $push: { images: savedImg._id }}, function (err) {
+      if (err) {
+        winston.error(err);
+        deferred.reject(err)
+      } else {
+        deferred.resolve({
+          _id: savedImg._id,
+          originalname: savedImg.originalname
+        })
+      }
+    });
   });
 
   return deferred.promise
 };
+
+exports.getTripImage = function(imageId) {
+  /*return Image.findById(imageId).stream()*/
+  var deferred = q.defer();
+
+  Image.findById(imageId, function(err, img) {
+    if (err) {
+      winston.error(err);
+      deferred.reject(err)
+    } else {
+      deferred.resolve(img._doc.buffer)
+    }
+  });
+
+  return deferred.promise
+}
+
+exports.deleteTripImage = function(imageId) {
+  var deferred = q.defer();
+
+  Image.findByIdAndRemove(imageId, function(err) {
+    if (err) {
+      winston.error(err);
+      deferred.reject(err)
+    } else {
+      Trip.update({}, {$pull: {images: {$in: [imageId]}}}, {multi: true}, function (err) {
+        if (err) {
+          winston.error(err);
+          deferred.reject(err)
+        } else {
+          deferred.resolve()
+        }
+      })
+    }
+  })
+
+  return deferred.promise
+}

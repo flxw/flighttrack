@@ -11,8 +11,13 @@ module.exports = function(app) {
     .route('/trips')
     .get(tripHandler.getTrips);
 
+  // TODO: watch out for route protection when deleting
   app
-    .route('/trips/img')
-    .get
+    .route('/trip/img/:id')
+    .get(tripHandler.getImage)
+    .delete(tripHandler.deleteImage)
+
+  app
+    .route('/trip/img')
     .post(upload.single('image'), tripHandler.postTripImage)
 };
