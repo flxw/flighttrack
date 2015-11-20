@@ -45,7 +45,6 @@
       // preserve the information about previosly uploaded images :)
       vm.isEditing = false;
       vm.trip = tripService.getCurrentTripCopy();
-      debugger
       vm.trip.images = images;
       tripService.changeCurrentTrip(vm.trip);
     }

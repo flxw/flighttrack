@@ -13,7 +13,8 @@ var tripSchema = new mongoose.Schema({
     start: Date,
     end: Date
   },
-  images: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Image'}, ]
+  images: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Image'} ],
+  storyMarkdown: String
 });
 
 module.exports = mongoose.model('Trip', tripSchema)

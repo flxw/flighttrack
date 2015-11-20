@@ -69,7 +69,21 @@ exports.deleteTripImage = function(imageId) {
         }
       })
     }
-  })
+  });
 
   return deferred.promise
-}
+};
+
+exports.saveTrip = function(t) {
+  var deferred = q.defer();
+  var id = t._id;
+
+  delete t._id;
+
+  Trip.findOneAndUpdate({ _id: id }, t, {upsert:true}, function(e,nt){
+    if (e) deferred.reject(e);
+    else deferred.resolve()
+  });
+
+  return deferred.promise
+};

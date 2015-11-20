@@ -20,4 +20,8 @@ module.exports = function(app) {
   app
     .route('/trip/img')
     .post(upload.single('image'), tripHandler.postTripImage)
+
+  app
+    .route('/trip')
+    .post(tripHandler.postTrip)
 };

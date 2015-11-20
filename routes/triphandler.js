@@ -16,11 +16,17 @@ exports.postTripImage = function(req, res) {
 
 exports.getImage = function(req,res) {
   database.getTripImage(req.params.id)
-    .then(function(img) { debugger;res.send(img) })
+    .then(function(img) { res.send(img) })
 }
 
 exports.deleteImage = function(req,res) {
   database.deleteTripImage(req.params.id)
     .then(function() { res.sendStatus(200) })
-    .catch(function() { res.senStatus(500) })
+    .catch(function() { res.sendStatus(500) })
+}
+
+exports.postTrip = function(req,res) {
+  database.saveTrip(req.body)
+    .then(function() { res.sendStatus(200) })
+    .catch(function() { res.sendStatus(200) })
 }

@@ -21,7 +21,9 @@ function tripService($http) {
   s.updateCoordinateCallback = function() {};
 
   s.changeCurrentTrip = function(t) {
-    s.trips[selectedTripIndex] = t;
+    return $http.post('/trip', t)
+            .then(function() { s.trips[selectedTripIndex] = t })
+            .catch(function() {});
   };
 
   s.selectTrip = function(index) {
