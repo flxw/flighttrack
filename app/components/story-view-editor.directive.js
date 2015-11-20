@@ -40,8 +40,14 @@
     }
 
     vm.cancelChanges = function () {
+      var images = vm.trip.images;
+
+      // preserve the information about previosly uploaded images :)
       vm.isEditing = false;
       vm.trip = tripService.getCurrentTripCopy();
+      debugger
+      vm.trip.images = images;
+      tripService.changeCurrentTrip(vm.trip);
     }
 
     vm.uploadImage = function(image) {
