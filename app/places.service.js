@@ -34,8 +34,8 @@ function PlacesService(uiGmapIsReady, $q) {
           formattedResults.push({
             name: results[i].formatted_address,
             coordinates: {
-              latitude: results[i].geometry.location.A,
-              longitude: results[i].geometry.location.F
+              latitude: results[i].geometry.location.lat(),
+              longitude: results[i].geometry.location.lng()
             }
           });
         }

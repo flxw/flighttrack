@@ -23,7 +23,7 @@
     vm.destinationSearch = {
       text: '',
       query: placesService.searchPlace
-    }
+    };
     vm.trip = tripService.getCurrentTripCopy();
 
     vm.goBack = function () {
@@ -42,12 +42,12 @@
     vm.cancelChanges = function () {
       var images = vm.trip.images;
 
-      // preserve the information about previosly uploaded images :)
+      // preserve the information about previously uploaded images :)
       vm.isEditing = false;
       vm.trip = tripService.getCurrentTripCopy();
       vm.trip.images = images;
       tripService.changeCurrentTrip(vm.trip);
-    }
+    };
 
     vm.uploadImage = function(image) {
       vm.upload.hidden = false;
@@ -65,6 +65,6 @@
         .then(function() {
           vm.trip.images.splice(imageIndex, 1)
         })
-    }
+    };
   }
 })();
