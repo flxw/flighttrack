@@ -5,21 +5,24 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var stylus = require("stylus");
 var mongoose = require('mongoose');
+var passport = require('passport');
+var session = require('express-session');
 
 var config = require('./config');
+require('./config/passport')(passport)
 
 var app  = express();
 var port = process.env.PORT || '3000';
 
 mongoose.connect(config.database.url);
 
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(session({ secret: config.secrets.session }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(stylus.middleware(path.join(__dirname, 'app')));
 app.use(express.static(path.join(__dirname, 'app')));
 
@@ -46,6 +49,7 @@ app.use(function(err, req, res, next) {
 });
 
 require('./routes/trips')(app)
+require('./routes/account')(app, passport)
 
 
 app.listen(port)

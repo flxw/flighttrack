@@ -32,13 +32,17 @@
   },
   "dependencies": {
     "JSONStream": "^1.0.6",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.14.1",
     "cookie-parser": "^1.4.0",
     "express": "^4.13.3",
+    "express-session": "^1.12.1",
     "mongodb": "^2.0.48",
     "mongoose": "^4.2.6",
     "morgan": "^1.6.1",
     "multer": "^1.1.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "q": "^1.4.1",
     "stylus": "^0.52.4",
     "winston": "^2.1.1"

@@ -19,6 +19,8 @@
 <body layout="row">
 
 <md-content class="sidebar md-whiteframe-6dp" flex="33"  ng-controller="BadCtrl as badCtrl">
+  <logo-login-bar></logo-login-bar>
+
   <div class="top-profile" layout-padding>
     <img src="http://placehold.it/350x150">
     <div class="feature-box">
@@ -27,7 +29,7 @@
   </div>
 
   <section class="layout-align-center-center layout-row" ng-if="!badCtrl.isTripSelected()">
-    <md-button class="md-primary">add trip</md-button>
+    <md-button class="md-primary" ng-disabled="true">add trip</md-button>
   </section>
 
   <md-list layout-padding ng-if="!badCtrl.isTripSelected()">
@@ -77,6 +79,8 @@
 <script type="text/javascript" src="map.controller.js"></script>
 <script type="text/javascript" src="trips.service.js"></script>
 <script type="text/javascript" src="places.service.js"></script>
+<script type="text/javascript" src="login.service.js"></script>
 <script type="text/javascript" src="components/story-view-editor.directive.js"></script>
+<script type="text/javascript" src="components/logo-login-bar.directive.js"></script>
 </body>
 </html>
