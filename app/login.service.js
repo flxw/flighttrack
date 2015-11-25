@@ -14,10 +14,12 @@
       var payload = { _id: _id, password: password };
 
       $http
-        .post('/account/login', payload)
+        .post('/account/home.loggedIn', payload)
         .then(function (response) {
         });
     };
+
+    s.isLoggedIn = false;
 
     return s;
   }

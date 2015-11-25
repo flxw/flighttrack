@@ -9,7 +9,7 @@
       scope: true,
       controller: logoLoginBarCtrl,
       controllerAs: "ctrl",
-      templateUrl: "components/logo-login-bar.template.html"
+      templateUrl: "components/logo-home.loggedIn-bar.template.html"
     }
   }
 

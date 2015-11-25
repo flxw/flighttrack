@@ -16,50 +16,14 @@
   <link rel='stylesheet' type='text/css' href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic" async>
   <link rel="stylesheet" type="text/css" href="style/main.css" async>
 </head>
-<body layout="row">
-
-<md-content class="sidebar md-whiteframe-6dp" flex="33"  ng-controller="BadCtrl as badCtrl">
-  <logo-login-bar></logo-login-bar>
-
-  <div class="top-profile" layout-padding>
-    <img src="http://placehold.it/350x150">
-    <div class="feature-box">
-      <h1>Lukas Faber</h1>
-    </div>
-  </div>
-
-  <section class="layout-align-center-center layout-row" ng-if="!badCtrl.isTripSelected()">
-    <md-button class="md-primary" ng-disabled="true">add trip</md-button>
-  </section>
-
-  <md-list layout-padding ng-if="!badCtrl.isTripSelected()">
-    <md-list-item ng-repeat="trip in badCtrl.getTrips()" ng-click="badCtrl.selectTrip($index)">
-      <h1 class="story-title">{{ trip.destination.name }}</h1>
-      <span class="story-dates">{{ trip.dates.start | date : "dd.MM.yyyy" }} - {{ trip.dates.end | date : "dd.MM.yyyy" }}</span>
-    </md-list-item>
-  </md-list>
-
-  <story-view-editor ng-if="badCtrl.isTripSelected()"></story-view-editor>
-</md-content>
-
-<section flex ng-controller="MapController as mapCtrl">
-  <ui-gmap-google-map flex
-                      center="mapCtrl.center"
-                      zoom="mapCtrl.zoom"
-                      options="mapCtrl.options"
-                      pan="mapCtrl.pan"
-                      control="mapCtrl.control">
-    <ui-gmap-markers models="mapCtrl.getTrips()" coords="'destination.coordinates'" idKey="'_id'">
-
-    </ui-gmap-markers>
-  </ui-gmap-google-map>
-</section>
+<body ng-app="myApp">
+<div class="content" layout="row" ui-view></div>
 
 <!-- In production use:
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
 -->
 <script type="text/javascript" src="libs/angular/angular.js"></script>
-<script type="text/javascript" src="libs/angular-route/angular-route.js"></script>
+<script type="text/javascript" src="libs/angular-ui-router/release/angular-ui-router.js"></script>
 <script type="text/javascript" src="libs/lodash/lodash.min.js" ></script>
 
 <script type="text/javascript" src="libs/marked/lib/marked.js"></script>
