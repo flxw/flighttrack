@@ -27,7 +27,7 @@ function MapController(tripService, gmapApi) {
     gmapApi.then(function() {
       var northEast = new google.maps.LatLng(tripService.coordinates.boundaries.northeast.latitude, tripService.coordinates.boundaries.northeast.longitude);
       var southWest = new google.maps.LatLng(tripService.coordinates.boundaries.southwest.latitude, tripService.coordinates.boundaries.southwest.longitude);
-      var bounds = new google.maps.LatLngBounds(southWest,northEast);
+      var bounds    = new google.maps.LatLngBounds(southWest,northEast);
 
       vm.control.getGMap().fitBounds(bounds);
 
@@ -38,8 +38,6 @@ function MapController(tripService, gmapApi) {
       }
     });
   };
-
-//  $timeout(updateCoordinateView,1000);
 }
 
 // ------------------------------------

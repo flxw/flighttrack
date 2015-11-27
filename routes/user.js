@@ -4,8 +4,8 @@ var accountHandler = require('./accounthandler.js');
 
 module.exports = function(app, passport) {
   app
-    .route('/account/login')
-    .post(passport.authenticate('local-login'), function(error,req,res) {
+    .route('/account/home.loggedIn')
+    .post(passport.authenticate('local-home.loggedIn'), function(error,req,res) {
       debugger
     });
 

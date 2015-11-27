@@ -1,0 +1,13 @@
+<div layout="column" flex="60">
+  <md-input-container flex>
+    <label>E-Mail Address</label>
+    <input type="email" ng-model="ctrl.email">
+  </md-input-container>
+  <md-input-container flex>
+    <label>Password</label>
+    <input type="password" ng-model="ctrl.password">
+  </md-input-container>
+
+  <md-button class="md-primary">Login</md-button>
+  <p>or <a ui-sref="home.loggedOut.default">register</a></p>
+</div>
