@@ -1,12 +1,13 @@
-<ui-gmap-google-map center="ctrl.center"
+<ui-gmap-google-map flex
+                    center="ctrl.center"
                     zoom="ctrl.zoom"
                     options="ctrl.options"
                     pan="ctrl.pan"
-                    control="ctrl.control"
-                    bounds="ctrl.calculateBounds()">
+                    control="ctrl.control">
 
   <ui-gmap-markers models="ctrl.getTrips()"
                    coords="'destination.coordinates'"
-                   idKey="'_id'">
+                   idKey="'_id'"
+                   fit="true">
   </ui-gmap-markers>
 </ui-gmap-google-map>

@@ -4,11 +4,11 @@
 
 angular
   .module('myApp')
-  .controller("ProfileCtrl", profileCtrl);
+  .controller("TripController", tripController);
 
-profileCtrl.$inject = ["ProfileService", "$stateParams", "$state"];
+tripController.$inject = ["ProfileService", "$stateParams", "$state"];
 
-function profileCtrl(ProfileService, $stateParams, $state) {
+function tripController(ProfileService, $stateParams, $state) {
   var vm = this;
 
   vm.userId = $stateParams.userId;

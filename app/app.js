@@ -69,7 +69,7 @@
           },
           'detail': {
             templateUrl: 'profile/detail.html',
-            controller: 'ProfileMapController',
+            controller: 'MapController',
             controllerAs: 'ctrl'
           }
         }
@@ -78,7 +78,9 @@
         url: '/:userId/:tripId',
         views: {
           'master@': {
-            templateUrl: 'trip/master.html'
+            templateUrl: 'trip/master.html',
+            controller: 'TripController',
+            controllerAs: 'tripCtrl'
           }
         }
       })
