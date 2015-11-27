@@ -1,5 +1,5 @@
 <md-list layout-padding>
-  <md-list-item ng-repeat="trip in profileCtrl.getCurrentProfileTrips()"
+  <md-list-item ng-repeat="trip in profileCtrl.getTrips(profileCtrl.userId)"
                 ng-click="profileCtrl.openTrip(trip._id)">
     <h1 class="story-title">{{ trip.destination.name }}</h1>
     <span class="story-dates">{{ trip.dates.start | date : "dd.MM.yyyy" }} - {{ trip.dates.end | date : "dd.MM.yyyy" }}</span>

@@ -11,8 +11,10 @@ profileCtrl.$inject = ["ProfileService", "$stateParams", "$state"];
 function profileCtrl(ProfileService, $stateParams, $state) {
   var vm = this;
 
-  vm.getCurrentProfileTrips = ProfileService.getCurrentProfileTrips;
-  vm.openTrip = function(tripId) { $state.go('trip', { userId: $stateParams.userId, tripId: tripId }) }
+  vm.userId = $stateParams.userId;
+
+  vm.getTrips = ProfileService.getTripsForUser
+  vm.openTrip = function(tripId) { $state.go('trip', { profileId: $stateParams.userId, tripId: tripId }) }
 };
 
 // ------------------------------------

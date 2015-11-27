@@ -48,8 +48,8 @@ app.use(function(err, req, res, next) {
   });
 });
 
-require('./routes/trips')(app)
-require('./routes/account')(app, passport)
+require('./routes/trip')(app)
+require('./routes/user')(app, passport)
 
 
 app.listen(port)

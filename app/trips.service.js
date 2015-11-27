@@ -5,42 +5,49 @@ angular
   .module("myApp")
   .factory("tripService", tripService);
 
-tripService.$inject = ["$http"];
+tripService.$inject = ["$q", "$http"];
 
-function tripService($http) {
+function tripService($q, $http) {
   var s = {};
-  var selectedTripIndex = null;
-  var trips = [];
+  var selectedTripId = null;
+  var currentProfileId = null;
 
+  s.trips = {};
   s.coordinates = {};
 
-  s.getTrips = function() {
-    return s.trips;
-  };
+  s.getTripsForUser = function(uid) {
+    var deferred = $q.defer()
+
+    if (ui in s.trips)
+
+    return deferred.promise
+  } };
+
+  /*
 
   s.updateCoordinateCallback = function() {};
 
   s.changeCurrentTrip = function(t) {
     return $http.post('/trip', t)
-            .then(function() { s.trips[selectedTripIndex] = t })
+            .then(function() { s.trips[selectedTripId] = t })
             .catch(function() {});
   };
 
   s.selectTrip = function(index) {
-    selectedTripIndex = index;
+    selectedTripId = index;
     recalculateCoordinates()
   };
 
   s.getCurrentTripCopy = function() {
-    return _.cloneDeep(s.trips[selectedTripIndex])
+    return _.cloneDeep(s.trips[selectedTripId])
   }
 
   s.getCurrentTripRef = function() {
-    return s.trips[selectedTripIndex]
+    return s.trips[selectedTripId]
   }
 
   s.isTripSelected = function() {
-    return selectedTripIndex !== null;
+    return selectedTripId !== null;
   }
 
   s.loadTrips = function() {
@@ -61,9 +68,9 @@ function tripService($http) {
     var coordinateLoop = [];
 
     // collect the coordinates that should be included in the boundary
-    if (selectedTripIndex !== null) {
-      coordinateLoop = [s.trips[selectedTripIndex].destination.coordinates];
-      coordinateLoop.concat(s.trips[selectedTripIndex].stops)
+    if (selectedTripId !== null) {
+      coordinateLoop = [s.trips[selectedTripId].destination.coordinates];
+      coordinateLoop.concat(s.trips[selectedTripId].stops)
     } else {
       coordinateLoop = _.map(s.trips, 'destination.coordinates')
     }
@@ -87,8 +94,8 @@ function tripService($http) {
   }
 
   function recalculateCenter() {
-    if (selectedTripIndex !== null) {
-      s.coordinates.center = s.trips[selectedTripIndex].destination.coordinates
+    if (selectedTripId !== null) {
+      s.coordinates.center = s.trips[selectedTripId].destination.coordinates
     } else {
       s.coordinates.center = { latitude: 0, longitude: 0 }
     }
@@ -103,7 +110,7 @@ function tripService($http) {
   s.loadTrips();
 
   return s;
-}
+}*/
 
 // ------------------------------------
 })();

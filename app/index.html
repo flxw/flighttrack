@@ -16,8 +16,12 @@
   <link rel='stylesheet' type='text/css' href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic" async>
   <link rel="stylesheet" type="text/css" href="style/main.css" async>
 </head>
-<body ng-app="myApp">
-<div class="content" layout="row" ui-view></div>
+<body layout="row" ng-app="myApp">
+<md-content class="sidebar md-whiteframe-6dp" flex="33" layout="row" ui-view="master">
+</md-content>
+
+<section flex ui-view="detail">
+</section>
 
 <!-- In production use:
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
@@ -38,10 +42,12 @@
 
 <script type="text/javascript" src="libs/ng-file-upload/ng-file-upload.min.js"></script>
 
+<script type="text/javascript" src="libs/angular-resource/angular-resource.min.js"></script>
+
 <script type="text/javascript" src="app.js"></script>
-<script type="text/javascript" src="bad-ctrl.js"></script>
-<script type="text/javascript" src="map.controller.js"></script>
-<script type="text/javascript" src="trips.service.js"></script>
+<script type="text/javascript" src="profile/profile.controller.js"></script>
+<script type="text/javascript" src="profile/profilemap.controller.js"></script>
+<script type="text/javascript" src="profile.service.js"></script>
 <script type="text/javascript" src="places.service.js"></script>
 <script type="text/javascript" src="login.service.js"></script>
 <script type="text/javascript" src="components/story-view-editor.directive.js"></script>

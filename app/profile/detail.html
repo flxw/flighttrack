@@ -1,14 +1,12 @@
-<md-content class="sidebar md-whiteframe-6dp" flex="33"  ng-controller="BadCtrl as badCtrl">
-  <div class="top-profile" layout-padding>
-    <img src="http://placehold.it/350x150">
-    <div class="feature-box">
-      <h1>Lukas Faber</h1>
-    </div>
-  </div>
+<ui-gmap-google-map center="ctrl.center"
+                    zoom="ctrl.zoom"
+                    options="ctrl.options"
+                    pan="ctrl.pan"
+                    control="ctrl.control"
+                    bounds="ctrl.calculateBounds()">
 
-  <section layout-padding ui-view></section>
-  </section>
-</md-content>
-
-<section>
-</section>
+  <ui-gmap-markers models="ctrl.getTrips()"
+                   coords="'destination.coordinates'"
+                   idKey="'_id'">
+  </ui-gmap-markers>
+</ui-gmap-google-map>

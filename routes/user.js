@@ -1,15 +1,19 @@
 'use strict';
 
-var accountHandler = require('./accounthandler.js');
+var userHandler = require('./userhandler.js');
 
 module.exports = function(app, passport) {
   app
-    .route('/account/home.loggedIn')
-    .post(passport.authenticate('local-home.loggedIn'), function(error,req,res) {
+    .route('/user/login')
+    .post(passport.authenticate('local-login'), function(error,req,res) {
       debugger
     });
 
   app
-    .route('/account/logout')
-    .get(accountHandler.logout);
+    .route('/user/logout')
+    .get(userHandler.logout);
+
+  app
+    .route('/user/:uid/trips')
+    .get(userHandler.getTrips)
 };

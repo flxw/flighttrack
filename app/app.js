@@ -3,14 +3,14 @@
   // ------------------------------------
 
   angular
-    .module('myApp', ['uiGmapgoogle-maps', 'ngMaterial', 'ngMessages', 'hc.marked', 'ngFileUpload', 'ui.router'])
+    .module('myApp', ['uiGmapgoogle-maps', 'ngMaterial', 'ngMessages', 'hc.marked', 'ngFileUpload', 'ui.router', 'ngResource'])
     .config(config)
     .run(run);
 
   config.$inject = ['uiGmapGoogleMapApiProvider', "markedProvider", "$stateProvider", "$urlRouterProvider"];
   run.$inject = ['$rootScope', '$state', 'LoginService'];
 
-  function config(GoogleMapApiProviders, markedProvider, $stateProvider, $urlRouterProvider) {
+  function config(GoogleMapApiProviders, markedProvider, $stateProvider, $urlRouterProvider, configProvider) {
     GoogleMapApiProviders.configure({
       key: 'AIzaSyD0lPD-ReozzrAEWR4eFKv6v0OzEp0bMWE',
       v: '3.20',
@@ -26,47 +26,80 @@
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
-      .state('home', {
-        abstract: true,
-        template: '<div class="content" ui-view=""></div>',
-      })
-      .state('home.loggedIn', {
+      .state('landing', {
         url: '/',
-        templateUrl: 'home.loggedIn/home.html'
+        views: {
+          'master': {
+            templateUrl: 'landing/master.html'
+          },
+          'detail': {
+            templateUrl: 'landing/detail.html'
+          }
+        }
       })
-      .state('home.loggedOut', {
-        templateUrl: 'home.loggedOut/home.html',
-        abstract: true
-      })
-      .state('home.loggedOut.login', {
+      .state('login', {
         url: '/login',
-        templateUrl: 'home.loggedOut/login.html'
+        views: {
+          'master': {
+            templateUrl: 'login/master.html'
+          },
+          'detail': {
+            templateUrl: 'login/detail.html'
+          }
+        }
       })
-      .state('home.loggedOut.default', {
-        url: '/',
-        templateUrl: 'home.loggedOut/default.html'
+      .state('register', {
+        url: '/register',
+        views: {
+          'master': {
+            templateUrl: 'register/master.html'
+          },
+          'detail': {
+            templateUrl: 'register/detail.html'
+          }
+        }
+      })
+      .state('profile', {
+        url: '/:userId',
+        views: {
+          'master': {
+            templateUrl: 'profile/master.html',
+            controller: 'ProfileCtrl',
+            controllerAs: 'profileCtrl'
+          },
+          'detail': {
+            templateUrl: 'profile/detail.html',
+            controller: 'ProfileMapController',
+            controllerAs: 'ctrl'
+          }
+        }
+      })
+      .state('trip', {
+        url: '/:userId/:tripId',
+        views: {
+          'master': {
+            templateUrl: 'trip/master.html'
+          },
+          'detail': {
+            templateUrl: 'trip/detail.html'
+          }
+        }
       })
   }
 
   function run($rootScope, $state, LoginService) {
-    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-
-      // logged out is logged out
+    /*$rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
       var doRedirectToLoggedOut = !LoginService.isLoggedIn && toState.name === "home.loggedIn";
+      var doRedirectToLoggedIn = LoginService.isLoggedIn && toState.name === "home.loggedOut.default";
 
       if (doRedirectToLoggedOut) {
         event.preventDefault();
         $state.go("home.loggedOut.default");
-      }
-
-      // logged in is logged in
-      var doRedirectToLoggedIn = LoginService.isLoggedIn && toState.name === "home.loggedOut";
-
-      if (doRedirectToLoggedIn) {
+      } else if (doRedirectToLoggedIn) {
         event.preventDefault();
         $state.go("home.loggedIn");
       }
-    });
+    });*/
   }
 
   // ------------------------------------

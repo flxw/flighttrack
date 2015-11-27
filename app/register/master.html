@@ -1,0 +1,25 @@
+<div layout-align="center center" layout="row" flex>
+  <div layout="column" flex="70">
+    <div layout="row">
+      <md-input-container flex>
+        <label>First name</label>
+        <input ng-model="ctrl.firstName">
+      </md-input-container>
+      <md-input-container flex>
+        <label>Last Name</label>
+        <input ng-model="ctrl.lastName">
+      </md-input-container>
+    </div>
+    <md-input-container flex>
+      <label>E-Mail Address</label>
+      <input type="email" ng-model="ctrl.email">
+    </md-input-container>
+    <md-input-container flex>
+      <label>Password</label>
+      <input type="password" ng-model="ctrl.password">
+    </md-input-container>
+
+    <md-button class="md-primary">Register</md-button>
+    <p>or <a ui-sref="login">login</a></p>
+  </div>
+</div>

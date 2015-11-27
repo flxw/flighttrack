@@ -8,7 +8,7 @@ module.exports = function(passport) {
   // =========================================================================
   // passport session setup ==================================================
   // =========================================================================
-  // required for persistent login sessions
+  // required for persistent home.loggedIn sessions
   // passport needs ability to serialize and unserialize users out of session
 
   // used to serialize the user for the session
@@ -26,7 +26,7 @@ module.exports = function(passport) {
   // =========================================================================
   // LOCAL SIGNUP ============================================================
   // =========================================================================
-  // we are using named strategies since we have one for login and one for signup
+  // we are using named strategies since we have one for home.loggedIn and one for signup
   // by default, if there was no name, it would just be called 'local'
 
   passport.use('local-signup', new LocalStrategy({
@@ -42,7 +42,7 @@ module.exports = function(passport) {
       process.nextTick(function() {
 
         // find a user whose email is the same as the forms email
-        // we are checking to see if the user trying to login already exists
+        // we are checking to see if the user trying to home.loggedIn already exists
         User.findOneById(_id, function(err, user) {
           // if there are any errors, return the error
           if (err) return done(err);
@@ -68,7 +68,7 @@ module.exports = function(passport) {
     }
   ));
 
-  passport.use('local-login', new LocalStrategy({
+  passport.use('local-home.loggedIn', new LocalStrategy({
       // by default, local strategy uses username and password, we will override with email
       usernameField : '_id',
       passwordField : 'password',
@@ -77,7 +77,7 @@ module.exports = function(passport) {
     function(req, _id, password, done) { // callback with email and password from our form
 
       // find a user whose email is the same as the forms email
-      // we are checking to see if the user trying to login already exists
+      // we are checking to see if the user trying to home.loggedIn already exists
       User.findOneById(_id, function(err, user) {
         if (err) return done(err);
 

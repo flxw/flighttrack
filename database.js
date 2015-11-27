@@ -4,12 +4,22 @@ var config = require('./config.js');
 var q = require('q');
 var winston    = require('winston');
 
+var User  = require('./models/user.js');
+var Trip  = require('./models/trip.js');
+var Image = require('./models/image.js');
 
-var Trip = require('./models/trip.js');
-var Image = require('./models/image.js')
+exports.getTripsForUser = function(uid) {
+  var deferred = q.defer()
 
-exports.getTripStream = function() {
-  return Trip.find().stream()
+  // TODO trips need to know about their travellers
+  User
+    .findById(uid)
+    .populate('trips')
+    .exec(function(e,u) {
+      deferred.resolve(u._doc.trips)
+    });
+
+  return deferred.promise
 };
 
 exports.addTripImage = function(tripId, image) {

@@ -4,39 +4,42 @@
 
   angular
     .module('myApp')
-    .controller("MapController", MapController);
+    .controller("ProfileMapController", MapController);
 
-  MapController.$inject = ["tripService", "uiGmapGoogleMapApi"];
+  MapController.$inject = ["uiGmapGoogleMapApi", "ProfileService"];
 
-function MapController(tripService, gmapApi) {
+function MapController(gmapApi, profileService) {
   var vm = this;
 
   vm.options = {
     disableDefaultUI: true,
-    minZoom: 3
+    minZoom: 2
   };
   vm.zoom = 3;
   vm.pan = true;
   vm.control = {};
   vm.center = { latitude: 0, longitude: 0 };
-  vm.getTrips = tripService.getTrips;
+  vm.getTrips = profileService.getCurrentProfileTrips;
 
-  tripService.updateCoordinateCallback = updateCoordinateView;
+  vm.calculateBounds = function() {
+    var coordinateLoop = _.map(profileService.getCurrentProfileTrips(), 'destination.coordinates')
 
-  function updateCoordinateView() {
-    gmapApi.then(function() {
-      var northEast = new google.maps.LatLng(tripService.coordinates.boundaries.northeast.latitude, tripService.coordinates.boundaries.northeast.longitude);
-      var southWest = new google.maps.LatLng(tripService.coordinates.boundaries.southwest.latitude, tripService.coordinates.boundaries.southwest.longitude);
-      var bounds    = new google.maps.LatLngBounds(southWest,northEast);
+    if (coordinateLoop.length < 2) return;
 
-      vm.control.getGMap().fitBounds(bounds);
+    var latitudes  = _.map(coordinateLoop, 'latitude');
+    var longitudes = _.map(coordinateLoop, 'longitude');
 
-      if (tripService.isTripSelected()) {
-        var center = new google.maps.LatLng(tripService.coordinates.center.latitude, tripService.coordinates.center.longitude);
-        vm.zoom = 10;
-        vm.control.getGMap().panTo(center);
+    // reset boundary
+    return {
+      northeast: {
+        latitude:  _.max(latitudes),
+        longitude: _.max(longitudes)
+      },
+      southwest: {
+        latitude:  _.min(latitudes),
+        longitude: _.min(longitudes)
       }
-    });
+    };
   };
 }
 
