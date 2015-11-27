@@ -12,7 +12,7 @@ function profileCtrl(ProfileService, $stateParams, $state) {
   var vm = this;
 
   vm.getCurrentProfileTrips = ProfileService.getCurrentProfileTrips;
-  vm.openTrip = function(tripId) { $state.go('trip', { userId: $stateParams.userId, tripId: tripId }) }
+  vm.openTrip = function(tripId) { $state.go('profile.trip', { userId: $stateParams.userId, tripId: tripId }) }
 };
 
 // ------------------------------------
