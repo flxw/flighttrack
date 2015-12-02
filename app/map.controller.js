@@ -2,24 +2,28 @@
   'use strict';
 // ------------------------------------
 
-  angular
-    .module('myApp')
-    .controller("MapController", MapController);
+angular
+  .module('myApp')
+  .controller("MapController", MapController);
 
-  MapController.$inject = ["uiGmapGoogleMapApi", "ProfileService"];
+MapController.$inject = ["uiGmapGoogleMapApi", "ProfileService"];
 
 function MapController(gmapApi, profileService) {
   var vm = this;
 
   vm.cachedBounds = null;
+  vm.zoom = 3;
+  vm.pan = true;
+  vm.control = {};
   vm.options = {
     disableDefaultUI: true,
     minZoom: 2
   };
-  vm.zoom = 3;
-  vm.pan = true;
-  vm.control = {};
-  vm.center = { latitude: 0, longitude: 0 };
+  vm.center = {
+    latitude: 0,
+    longitude: 0
+  };
+
   vm.getTrips = profileService.getCurrentProfileTrips;
 
   // does only update the bounds when returning an object constructor
@@ -36,7 +40,7 @@ function MapController(gmapApi, profileService) {
     var latitudes  = _.map(coordinateLoop, 'latitude');
     var longitudes = _.map(coordinateLoop, 'longitude');
 
-    var b= {
+    var b = {
       northeast: {
         latitude:  _.max(latitudes),
         longitude: _.max(longitudes)
@@ -55,6 +59,7 @@ function MapController(gmapApi, profileService) {
   // make map controller global to avoid reloading of the heavy DOM element
   // make it distinguish between trip view mode and the normal mode by selecting
   // the stateParams.tripId
+  // controllerProvider does not work unfortunately...
 }
 
 // ------------------------------------

@@ -75,7 +75,7 @@
         }
       })
       .state('profile.trip', {
-        url: '/:userId/:tripId',
+        url: '/:tripId',
         views: {
           'master@': {
             templateUrl: 'trip/master.html',

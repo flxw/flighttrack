@@ -17,7 +17,7 @@
   <link rel="stylesheet" type="text/css" href="style/main.css" async>
 </head>
 <body layout="row" ng-app="myApp">
-<md-content class="sidebar md-whiteframe-6dp" flex="33" layout="row" ui-view="master">
+<md-content class="sidebar md-whiteframe-6dp" flex="33" layout="column" ui-view="master">
 </md-content>
 
 <section flex ui-view="detail">
@@ -49,9 +49,9 @@
 <script type="text/javascript" src="trip/trip.controller.js"></script>
 <script type="text/javascript" src="map.controller.js"></script>
 <script type="text/javascript" src="profile.service.js"></script>
+<script type="text/javascript" src="trip.service.js"></script>
 <script type="text/javascript" src="places.service.js"></script>
 <script type="text/javascript" src="login.service.js"></script>
-<script type="text/javascript" src="components/story-view-editor.directive.js"></script>
 <script type="text/javascript" src="components/logo-login-bar.directive.js"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 'use strict';
 
+var Trip  = require('../models/trip.js');
 var database = require('../database');
 
 exports.postTripImage = function(req, res) {
@@ -23,4 +24,20 @@ exports.postTrip = function(req,res) {
   database.saveTrip(req.body)
     .then(function() { res.sendStatus(200) })
     .catch(function() { res.sendStatus(200) })
+}
+
+exports.getTrip = function(req,res) {
+  Trip.findById(req.params.id, function(e,t) {
+    if (e) res.sendStatus(500)
+    else res.json(t)
+  })
+}
+
+exports.updateTrip = function(req,res) {
+  var t = req.body;
+
+  Trip.update({_id: t._id}, { $set: t }, function(e,nt){
+    if (e) res.sendStatus(500)
+    else res.sendStatus(200)
+  });
 }
