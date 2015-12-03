@@ -6,9 +6,9 @@ angular
   .module('myApp')
   .controller("MapController", MapController);
 
-MapController.$inject = ["uiGmapGoogleMapApi", "ProfileService"];
+MapController.$inject = ["ProfileService", "TripService", "$state", "$rootScope"];
 
-function MapController(gmapApi, profileService) {
+function MapController(ProfileService, TripService, $state, $rootScope) {
   var vm = this;
 
   vm.cachedBounds = null;
@@ -17,43 +17,45 @@ function MapController(gmapApi, profileService) {
   vm.control = {};
   vm.options = {
     disableDefaultUI: true,
-    minZoom: 2
+    minZoom: 2,
+    maxZoom: 12
   };
   vm.center = {
     latitude: 0,
     longitude: 0
   };
+  vm.markerControl = {};
+  vm.coordinates = [];
 
-  vm.getTrips = profileService.getCurrentProfileTrips;
+  $rootScope.$on('trips.updated', setCurrentMarkerCoordinates);
+  $rootScope.$on('$stateChangeSuccess', function(event, toState) {
+    switch(toState.name) {
+      case 'profile':
+      case 'profile.trip': setCurrentMarkerCoordinates(); break;
+      default: break;
+    }
+  });
 
-  // does only update the bounds when returning an object constructor
-  // sadly this leads to digest infinite loop?!
-  vm.calculateBounds = function() {
-    if (vm.cachedBounds != null) {
-      return vm.cachedBounds;
+  function setCurrentMarkerCoordinates() {
+    var coordinates;
+
+    try {
+      if ($state.params.tripId) {
+        var t = TripService.getTrip($state.params.tripId)
+        coordinates = [t.destination.coordinates]
+      } else {
+        coordinates = _.map(ProfileService.getCurrentProfileTrips(), 'destination.coordinates')
+      }
+    } catch(e) {
+      return
     }
 
-    var coordinateLoop = _.map(profileService.getCurrentProfileTrips(), 'destination.coordinates')
+    for (var i = 0; i < coordinates.length; ++i) {
+      if (coordinates[i] === undefined) continue;
+      coordinates[i].id = i;
+    }
 
-    if (coordinateLoop.length < 2) return;
-
-    var latitudes  = _.map(coordinateLoop, 'latitude');
-    var longitudes = _.map(coordinateLoop, 'longitude');
-
-    var b = {
-      northeast: {
-        latitude:  _.max(latitudes),
-        longitude: _.max(longitudes)
-      },
-      southwest: {
-        latitude:  _.min(latitudes),
-        longitude: _.min(longitudes)
-      }
-    };
-
-    vm.cachedBounds = _.cloneDeep(b);
-
-    return vm.cachedBounds;
+    vm.coordinates = coordinates
   };
 
   // make map controller global to avoid reloading of the heavy DOM element

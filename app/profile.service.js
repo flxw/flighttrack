@@ -5,22 +5,28 @@
     .module("myApp")
     .factory("ProfileService", profileService);
 
-  profileService.$inject = ["$q", "$http", "$resource", "$stateParams"];
+  profileService.$inject = ["$q", "$http", "$resource", "$stateParams", "TripService"];
 
-  function profileService($q, $http, $resource, $stateParams) {
+  function profileService($q, $http, $resource, $stateParams, TripService) {
     var s = {};
 
-    var Trips = $resource('/user/:userId/trips');
+    var User = $resource('/user/:userId');
 
     s.profiles = {};
 
     s.getTripsForUser = function(uid) {
       if (!(uid in s.profiles)) {
-        s.profiles[uid] = { trips: [] }
-        s.profiles[uid] = { trips: Trips.query({ userId: uid }) }
+        s.profiles[uid] = User.get({ userId: uid })
       }
 
-      return s.profiles[uid].trips
+      var tripIds = s.profiles[uid].trips || [];
+      var trips = []
+
+      for (var i = 0; i < tripIds.length; ++i) {
+        trips.push(TripService.getTrip(tripIds[i]));
+      }
+
+      return trips
     };
 
     s.getCurrentProfileTrips = function() {

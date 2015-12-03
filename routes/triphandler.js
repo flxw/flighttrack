@@ -1,24 +1,58 @@
 'use strict';
 
 var Trip  = require('../models/trip.js');
+var Image = require('../models/image.js');
+
 var database = require('../database');
 
-exports.postTripImage = function(req, res) {
-  database.addTripImage(req.body.id, req.file)
-    .then(function(r) { res.json(r) })
-    .catch(function() { res.sendStatus(512) })
+exports.getImage = function(req,res) {
+  Image.findById(req.params.imageId, function(err, img) {
+    if (err || !img) {
+      winston.error(err);
+      res.sendStatus(500);
+    } else {
+      res.send(img._doc.buffer)
+    }
+  });
 };
 
-exports.getImage = function(req,res) {
-  database.getTripImage(req.params.id)
-    .then(function(img) { res.send(img) })
-}
+exports.postTripImage = function(req, res) {
+  var img = new Image(req.file);
+
+  // save image to db
+  img.save(function(err, savedImg) {
+    // append image id to trip afterwards
+    Trip.findByIdAndUpdate(req.params.tripId, { $push: { images: savedImg._doc._id }}, function (err) {
+      if (err) {
+        winston.error(err);
+        res.sendStatus(500);
+      } else {
+        res.json({
+          _id: savedImg._id,
+          originalname: savedImg.originalname
+        });
+      }
+    });
+  });
+};
 
 exports.deleteImage = function(req,res) {
-  database.deleteTripImage(req.params.id)
-    .then(function() { res.sendStatus(200) })
-    .catch(function() { res.sendStatus(500) })
-}
+  Image.findByIdAndRemove(req.params.imageId, function(err) {
+    if (err) {
+      winston.error(err);
+      res.sendStatus(500);
+    } else {
+      Trip.update({_id: req.params.tripId}, {$pull: {images: {$in: [req.params.imageId]}}}, {multi: true}, function (err) {
+        if (err) {
+          winston.error(err);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
+      })
+    }
+  });
+};
 
 exports.postTrip = function(req,res) {
   database.saveTrip(req.body)

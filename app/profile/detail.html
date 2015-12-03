@@ -5,9 +5,9 @@
                     pan="ctrl.pan"
                     control="ctrl.control">
 
-  <ui-gmap-markers models="ctrl.getTrips()"
-                   coords="'destination.coordinates'"
-                   idKey="'_id'"
+  <ui-gmap-markers models="ctrl.coordinates"
+                   control="ctrl.markerControl"
+                   coords="'self'"
                    fit="true">
   </ui-gmap-markers>
 </ui-gmap-google-map>

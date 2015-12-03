@@ -14,7 +14,7 @@ exports.getTripsForUser = function(uid) {
   // TODO trips need to know about their travellers
   User
     .findById(uid)
-    .populate('trips')
+    //.populate('trips')
     .exec(function(e,u) {
       deferred.resolve(u._doc.trips)
     });
@@ -47,20 +47,15 @@ exports.addTripImage = function(tripId, image) {
 };
 
 exports.getTripImage = function(imageId) {
-  /*return Image.findById(imageId).stream()*/
-  var deferred = q.defer();
-
   Image.findById(imageId, function(err, img) {
-    if (err) {
+    if (err || !img) {
       winston.error(err);
       deferred.reject(err)
     } else {
       deferred.resolve(img._doc.buffer)
     }
   });
-
-  return deferred.promise
-}
+};
 
 exports.deleteTripImage = function(imageId) {
   var deferred = q.defer();

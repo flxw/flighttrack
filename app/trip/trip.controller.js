@@ -6,18 +6,18 @@ angular
   .module('myApp')
   .controller("TripController", tripController);
 
-  tripController.$inject = ["TripService", "PlacesService", "Upload", "$http", "$stateParams", "$state"];
+  tripController.$inject = ["TripService", "PlacesService", "Upload", "$http", "$state"];
 
-function tripController(TripService,  placesService, Upload, $http, $stateParams, $state) {
+function tripController(TripService,  placesService, Upload, $http, $state) {
   var vm = this;
 
   vm.isEditing = false;
   vm.upload  = { hidden: true, progress: 0, image: '' };
   vm.destinationSearch = { text: '', query: placesService.searchPlace };
 
-  vm.trip = TripService.getTrip($stateParams.tripId);
+  vm.trip = TripService.getTrip($state.params.tripId);
 
-  vm.goBack = function () { $state.go('profile', { userId: $stateParams.userId }) }
+  vm.goBack = function () { $state.go('profile', { userId: $state.params.userId }) }
 
   vm.edit = function () {
     vm.trip = _.cloneDeep(vm.trip);
@@ -47,6 +47,8 @@ function tripController(TripService,  placesService, Upload, $http, $stateParams
   };
 
   vm.uploadImage = function(image) {
+    if (image === null || image === undefined) return;
+
     vm.upload.hidden = false;
     Upload.upload({
         url: '/trip/' + vm.trip._id + '/img',
@@ -58,7 +60,7 @@ function tripController(TripService,  placesService, Upload, $http, $stateParams
   }
 
   vm.deleteImage = function(image, imageIndex) {
-    $http.delete('/trip/img/' + image)
+    $http.delete('/trip/' + $state.params.tripId + '/img/' + image)
       .then(function() {
         vm.trip.images.splice(imageIndex, 1)
       })

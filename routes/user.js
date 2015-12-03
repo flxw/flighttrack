@@ -14,6 +14,6 @@ module.exports = function(app, passport) {
     .get(userHandler.logout);
 
   app
-    .route('/user/:uid/trips')
-    .get(userHandler.getTrips)
+    .route('/user/:uid')
+    .get(userHandler.getUser)
 };
