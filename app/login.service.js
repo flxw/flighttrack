@@ -11,7 +11,7 @@
     var s = {};
 
     s.login =  function(_id, password) {
-      var payload = { _id: _id, password: password };
+      var payload = { email: _id, password: password };
 
       $http
         .post('/account/login', payload)

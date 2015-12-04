@@ -49,6 +49,7 @@ app.use(function(err, req, res, next) {
 });
 
 require('./routes/trip')(app)
+require('./routes/image')(app)
 require('./routes/user')(app, passport)
 
 

@@ -1,7 +1,17 @@
 <md-list layout-padding>
+  <md-list-item class="md-sticky md-2-line">
+    <img class="md-avatar profile-image"
+         ng-src="/img/{{ profileCtrl.getCurrentProfile().image }}"
+         ng-if="profileCtrl.getCurrentProfile().image !== null"/>
+    <h1 class="profile-name"><i class="profile-avatar material-icons">person</i></h1>
+    <div class="md-list-item-text" layout="column">
+      <h1 class="profile-name">{{ profileCtrl.getCurrentProfile().firstname }} {{ profileCtrl.getCurrentProfile().lastname }}</h1>
+      <p class="profile-caption"><i class="material-icons">flight_takeoff</i> {{ profileCtrl.getCurrentProfileTrips().length }} trips</p>
+    </div>
+  </md-list-item>
   <md-list-item ng-repeat="trip in profileCtrl.getCurrentProfileTrips()"
                 ng-click="profileCtrl.openTrip(trip._id)">
-    <h1 class="story-title">{{ trip.destination.name }}</h1>
+    <h3 class="story-title">{{ trip.destination.name }}</h3>
     <span class="story-dates">{{ trip.dates.start | date : "dd.MM.yyyy" }} - {{ trip.dates.end | date : "dd.MM.yyyy" }}</span>
   </md-list-item>
 </md-list>

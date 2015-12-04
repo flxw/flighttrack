@@ -9,10 +9,6 @@ var upload      = multer({ storage: storage });
 module.exports = function(app) {
   // TODO: watch out for route protection when deleting
   app
-    .route('/trip/img/:imageId')
-    .get(tripHandler.getImage);
-
-  app
     .route('/trip/:tripId/img/:imageId')
     .delete(tripHandler.deleteImage);
 

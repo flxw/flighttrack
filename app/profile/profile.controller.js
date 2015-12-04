@@ -6,13 +6,14 @@ angular
   .module('myApp')
   .controller("ProfileCtrl", profileCtrl);
 
-profileCtrl.$inject = ["ProfileService", "$stateParams", "$state"];
+profileCtrl.$inject = ["ProfileService", "$state"];
 
-function profileCtrl(ProfileService, $stateParams, $state) {
+function profileCtrl(ProfileService, $state) {
   var vm = this;
 
   vm.getCurrentProfileTrips = ProfileService.getCurrentProfileTrips;
-  vm.openTrip = function(tripId) { $state.go('profile.trip', { userId: $stateParams.userId, tripId: tripId }) }
+  vm.getCurrentProfile      = ProfileService.getCurrentProfile;
+  vm.openTrip = function(tripId) { $state.go('profile.trip', { userId: $state.params.userId, tripId: tripId }) }
 };
 
 // ------------------------------------

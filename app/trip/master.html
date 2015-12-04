@@ -53,7 +53,7 @@
       <md-progress-linear md-mode="determinate" value="{{ tripCtrl.upload.progress }}"></md-progress-linear>
     </md-subheader>
     <md-list-item class="md-1-line" ng-repeat="image in tripCtrl.trip.images">
-      <img ng-src="/trip/img/{{ image }}" class="md-avatar" />
+      <img ng-src="/img/{{ image }}" class="md-avatar" />
       <div class="md-list-item-text" layout="row">
         <h3 flex>{{ image }}</h3>
         <md-button class="right-control md-icon-button" ng-click="tripCtrl.deleteImage(image, $index)">

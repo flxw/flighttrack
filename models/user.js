@@ -8,7 +8,8 @@ var userSchema = mongoose.Schema({
   email: String,
   password: String,
   picture: Buffer,
-  trips: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Trip' }]
+  trips: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Trip' }],
+  image: {type: mongoose.Schema.Types.ObjectId, ref: 'Image', default: null},
 });
 
 // methods ======================

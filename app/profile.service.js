@@ -33,6 +33,10 @@
       return s.getTripsForUser($stateParams.userId)
     };
 
+    s.getCurrentProfile = function() {
+      return s.profiles[$stateParams.userId]
+    };
+
     return s;
   };
   // ------------------------------------

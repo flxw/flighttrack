@@ -19,7 +19,7 @@
 
     markedProvider.setRenderer({
       image: function (href, title, text) {
-        return "<img src='/trip/img/" + href + "'>";
+        return "<img src='/img/" + href + "'>";
       }
     });
 

@@ -3,18 +3,8 @@
 var Trip  = require('../models/trip.js');
 var Image = require('../models/image.js');
 
+var winston = require('winston');
 var database = require('../database');
-
-exports.getImage = function(req,res) {
-  Image.findById(req.params.imageId, function(err, img) {
-    if (err || !img) {
-      winston.error(err);
-      res.sendStatus(500);
-    } else {
-      res.send(img._doc.buffer)
-    }
-  });
-};
 
 exports.postTripImage = function(req, res) {
   var img = new Image(req.file);
