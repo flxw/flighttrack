@@ -34,16 +34,14 @@ function tripController(TripService,  placesService, Upload, $http, $state) {
   }
 
   vm.cancelChanges = function () {
+    var modifiedImages = _.cloneDeep(vm.trip.images);
     vm.isEditing = false;
+    vm.trip      = TripService.getTrip($state.params.tripId);
 
-    // preserve the information about previously uploaded images :)
-    var images = vm.trip.images;
-    vm.trip    = TripService.getTrip($state.params.tripId);
-
-    if (vm.trip.images.length == images.length) return
-
-    vm.trip.images = images;
-    TripService.saveTrip(vm.trip);
+    if (! _.isEqual(vm.trip.images, modifiedImages)) {
+      vm.trip.images = modifiedImages
+      TripService.updateImages(vm.trip._id, modifiedImages)
+    }
   };
 
   vm.uploadImage = function(image) {
@@ -57,7 +55,7 @@ function tripController(TripService,  placesService, Upload, $http, $state) {
       .progress(function(evt) { vm.upload.value = 100 * evt.loaded / evt.total })
       .then(function(res) { vm.trip.images.push(res.data._id) })
       .finally(function() { vm.upload.hidden = true; })
-  }
+  };
 
   vm.deleteImage = function(image, imageIndex) {
     $http.delete('/trip/' + $state.params.tripId + '/img/' + image)

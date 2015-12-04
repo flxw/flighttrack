@@ -44,6 +44,10 @@ function tripService($q, $resource, $cacheFactory, $rootScope) {
     }
   };
 
+  s.updateImages = function(tripId, images) {
+    s.trips[tripId].images = images;
+  };
+
   s.updateCallback = function() {};
 
   return s;
