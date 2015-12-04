@@ -26,7 +26,7 @@
       if (LoginService.isLoggedIn()) {
         return 'loggedIn'
       } else {
-        return 'default'
+        return state
       }
     };
 
@@ -36,7 +36,7 @@
 
     vm.hideLoginControls = function() {
       state = 'default';
-    }
+    };
 
     vm.login = function() {
       LoginService.login(vm.email, vm.password);
@@ -44,6 +44,6 @@
 
     vm.register = function() {
       $state.go('register');
-    }
+    };
   }
 })();
