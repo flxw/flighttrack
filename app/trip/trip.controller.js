@@ -31,7 +31,7 @@ function tripController(TripService,  placesService, Upload, $http, $state) {
   vm.saveChanges = function () {
     vm.isEditing = false;
     TripService.saveTrip(vm.trip)
-  }
+  };
 
   vm.cancelChanges = function () {
     var modifiedImages = _.cloneDeep(vm.trip.images);
@@ -52,7 +52,7 @@ function tripController(TripService,  placesService, Upload, $http, $state) {
         url: '/trip/' + vm.trip._id + '/img',
         data: { image: image }
       })
-      .progress(function(evt) { vm.upload.value = 100 * evt.loaded / evt.total })
+      .progress(function(evt) { vm.upload.progress = 100 * evt.loaded / evt.total })
       .then(function(res) { vm.trip.images.push(res.data._id) })
       .finally(function() { vm.upload.hidden = true; })
   };
