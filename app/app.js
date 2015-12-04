@@ -48,17 +48,6 @@
           }
         }
       })
-      .state('login', {
-        url: '/login',
-        views: {
-          'master': {
-            templateUrl: 'login/master.html'
-          },
-          'detail': {
-            templateUrl: 'login/detail.html'
-          }
-        }
-      })
       .state('register', {
         url: '/register',
         views: {
