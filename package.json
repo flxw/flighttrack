@@ -39,6 +39,7 @@
     "express-session": "^1.12.1",
     "mongodb": "^2.0.48",
     "mongoose": "^4.2.6",
+    "mongoose-timestamp": "^0.4.0",
     "morgan": "^1.6.1",
     "multer": "^1.1.0",
     "passport": "^0.3.2",

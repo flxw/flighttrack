@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
+var timestamps = require('mongoose-timestamp');
 
 var userSchema = mongoose.Schema({
   firstname: String,
@@ -19,5 +20,10 @@ userSchema.methods.validPassword = function(password) {
   //return bcrypt.compareSync(password, this.local.password);
   return password === this.password
 };
+
+userSchema.plugin(timestamps,  {
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
+});
 
 module.exports = mongoose.model('User', userSchema);

@@ -38,7 +38,7 @@ function tripController(TripService,  placesService, Upload, $http, $state) {
 
     // preserve the information about previously uploaded images :)
     var images = vm.trip.images;
-    vm.trip    = TripService.getTrip($stateParams.tripId);
+    vm.trip    = TripService.getTrip($state.params.tripId);
 
     if (vm.trip.images.length == images.length) return
 
