@@ -1,0 +1,24 @@
+<md-toolbar>
+  <div class="md-toolbar-tools" layout-margin ng-if="ctrl.getState() === 'default'">
+    <span flex>
+      Brand name
+    </span>
+    <md-button ng-click="ctrl.showLoginControls()">Login</md-button>
+    <md-button ng-click="ctrl.register()">Register</md-button>
+  </div>
+  <div class="md-toolbar-tools" layout-margin ng-if="ctrl.getState() === 'login'">
+    <md-button class="md-icon-button" aria-label="Go back" ng-click="ctrl.hideLoginControls()">
+      <md-icon class="material-icons">arrow_back</md-icon>
+    </md-button>
+    <md-input-container md-theme="dark">
+      <label>Email</label>
+      <input class="white-text" type="email" ng-model="email" >
+    </md-input-container>
+    <md-input-container>
+      <label>Password</label>
+      <input class="white-text" type="password" ng-model="password">
+    </md-input-container>
+    <md-button class="md-icon-button" aria-label="Go back" ng-click="ctrl.showLoginControls()">
+      <md-icon class="material-icons">lock_open</md-icon>
+    </md-button>  </div>
+</md-toolbar>

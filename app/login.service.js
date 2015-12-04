@@ -19,7 +19,7 @@
         });
     };
 
-    s.isLoggedIn = true;
+    s.isLoggedIn = function() { return false };
 
     return s;
   }

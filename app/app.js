@@ -7,10 +7,21 @@
     .config(config)
     .run(run);
 
-  config.$inject = ['uiGmapGoogleMapApiProvider', "markedProvider", "$stateProvider", "$urlRouterProvider"];
-  run.$inject = ['$rootScope', '$state', 'LoginService'];
+  config.$inject = [
+    'uiGmapGoogleMapApiProvider',
+    "markedProvider",
+    "$stateProvider",
+    "$urlRouterProvider",
+    "$mdThemingProvider"
+  ];
 
-  function config(GoogleMapApiProviders, markedProvider, $stateProvider, $urlRouterProvider, configProvider) {
+  run.$inject = [
+    '$rootScope',
+    '$state',
+    'LoginService'
+  ];
+
+  function config(GoogleMapApiProviders, markedProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider) {
     GoogleMapApiProviders.configure({
       key: 'AIzaSyD0lPD-ReozzrAEWR4eFKv6v0OzEp0bMWE',
       v: '3.20',
@@ -84,6 +95,10 @@
           }
         }
       })
+
+    $mdThemingProvider
+      .theme('dark')
+      .primaryPalette('yellow')
   }
 
   function run($rootScope, $state, LoginService) {
