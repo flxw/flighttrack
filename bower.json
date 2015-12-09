@@ -16,6 +16,7 @@
     "angular-messages": "~1.4.7",
     "angular-marked": "~1.0.0",
     "angular-ui-router": "~0.2.15",
-    "angular-resource": "~1.4.8"
+    "angular-resource": "~1.4.8",
+    "ng-file-upload": "~10.1.9"
   }
 }
