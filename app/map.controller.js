@@ -26,7 +26,16 @@ function MapController(ProfileService, TripService, $state, $rootScope) {
   };
   vm.markerControl = {};
   vm.coordinates = [];
+  vm.events = {
+    tilesloaded: function (map) {
+      $scope.$apply(function () {
+        google.maps.event.trigger(map, "resize");
+      });
+    }
+  };
 
+  // act accordingly to current state, to reduce some lag, since
+  // the map component would otherwise be loaded multiple times
   $rootScope.$on('trips.updated', setCurrentMarkerCoordinates);
   $rootScope.$on('$stateChangeSuccess', function(event, toState) {
     switch(toState.name) {
@@ -57,11 +66,6 @@ function MapController(ProfileService, TripService, $state, $rootScope) {
 
     vm.coordinates = coordinates
   };
-
-  // make map controller global to avoid reloading of the heavy DOM element
-  // make it distinguish between trip view mode and the normal mode by selecting
-  // the stateParams.tripId
-  // controllerProvider does not work unfortunately...
 }
 
 // ------------------------------------
