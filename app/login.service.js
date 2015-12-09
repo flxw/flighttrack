@@ -19,6 +19,17 @@
         });
     };
 
+    s.register = function(userObject) {
+      var deferred = $q.defer();
+
+      $http
+        .post('/user/register', userObject)
+        .then(deferred.resolve)
+        .catch(deferred.reject)
+
+      return deferred.promise
+    }
+
     s.isLoggedIn = function() { return false };
 
     return s;

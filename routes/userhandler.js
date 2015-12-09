@@ -1,9 +1,9 @@
 'use strict';
 
-var database = require('../database');
 var User  = require('../models/user.js');
 
 exports.login = function(req,res) {
+  res.sendStatus(200);
 };
 
 exports.logout = function(req, res) {
@@ -22,3 +22,7 @@ exports.getUser = function(req, res) {
     res.json(u._doc)
   });
 };
+
+exports.registerUser = function(req,res) {
+  res.json({ _id: req.user._id })
+}

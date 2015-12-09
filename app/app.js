@@ -52,7 +52,9 @@
         url: '/register',
         views: {
           'master': {
-            templateUrl: 'register/master.html'
+            templateUrl: 'register/master.html',
+            controller: 'RegisterController',
+            controllerAs: 'ctrl'
           },
           'detail': {
             templateUrl: 'register/detail.html'

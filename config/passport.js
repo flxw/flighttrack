@@ -19,7 +19,7 @@ module.exports = function(passport) {
   // used to deserialize the user
   passport.deserializeUser(function(id, done) {
     User.findById(id, function(err, user) {
-      done(err, user);
+      done(err, user._doc);
     });
   });
 
@@ -31,11 +31,11 @@ module.exports = function(passport) {
 
   passport.use('local-signup', new LocalStrategy({
       // by default, local strategy uses username and password, we will override with email
-      usernameField : '_id',
+      usernameField : 'email',
       passwordField : 'password',
       passReqToCallback : true // allows us to pass back the entire request to the callback
     },
-    function(req, _id, password, done) {
+    function(req, email, password, done) {
 
       // asynchronous
       // User.findOne wont fire unless data is sent back
@@ -43,7 +43,7 @@ module.exports = function(passport) {
 
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to home.loggedIn already exists
-        User.findOneById(_id, function(err, user) {
+        User.findOne({ email: email }, function(err, user) {
           // if there are any errors, return the error
           if (err) return done(err);
 
@@ -54,8 +54,10 @@ module.exports = function(passport) {
             var newUser = new User();
 
             // set the user's local credentials
-            newUser._id = _id;
-            newUser.password = newUser.generateHash(password);
+            newUser.email     = req.body.email;
+            newUser.password  = newUser.generateHash(password);
+            newUser.firstname = req.body.firstname;
+            newUser.lastname  = req.body.lastname;
 
             // save the user
             newUser.save(function(err) {
@@ -68,16 +70,16 @@ module.exports = function(passport) {
     }
   ));
 
-  passport.use('local-home.loggedIn', new LocalStrategy({
+  passport.use('local-login', new LocalStrategy({
       // by default, local strategy uses username and password, we will override with email
-      usernameField : '_id',
+      usernameField : 'email',
       passwordField : 'password',
       passReqToCallback : true // allows us to pass back the entire request to the callback
     },
     function(req, _id, password, done) { // callback with email and password from our form
 
       // find a user whose email is the same as the forms email
-      // we are checking to see if the user trying to home.loggedIn already exists
+      // we are checking to see if the user trying to login already exists
       User.findOneById(_id, function(err, user) {
         if (err) return done(err);
 
