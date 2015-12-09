@@ -3,17 +3,15 @@
 var User  = require('../models/user.js');
 
 exports.login = function(req,res) {
-  res.sendStatus(200);
+  res.json({
+    _id: req.user._id,
+    firstname: req.user.firstname,
+    lastname: req.user.lastname
+  });
 };
 
 exports.logout = function(req, res) {
   req.logout();
-  res.redirect('/')
-};
-
-exports.isLoggedIn = function(req,res,next) {
-  if (req.isAuthenticated()) return next();
-  else res.redirect('/');
 };
 
 exports.getUser = function(req, res) {
@@ -26,3 +24,8 @@ exports.getUser = function(req, res) {
 exports.registerUser = function(req,res) {
   res.json({ _id: req.user._id })
 }
+
+exports.isLoggedIn = function(req,res,next) {
+  if (req.isAuthenticated()) return next();
+  else res.sendStatus(401);
+};

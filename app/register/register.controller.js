@@ -21,8 +21,8 @@
 
     vm.register = function() {
       LoginService.register(vm.user)
-        .then(function(response) {
-          $state.go('profile', { userId: response.data._id })
+        .then(function(user) {
+          $state.go('profile', { userId: user._id })
         })
     }
   };

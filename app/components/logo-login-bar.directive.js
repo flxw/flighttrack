@@ -24,7 +24,7 @@
 
     vm.getState = function() {
       if (LoginService.isLoggedIn()) {
-        return 'loggedIn'
+        return 'logged-in'
       } else {
         return state
       }
@@ -39,7 +39,10 @@
     };
 
     vm.login = function() {
-      LoginService.login(vm.email, vm.password);
+      LoginService.login(vm.email, vm.password)
+        .catch(function() {
+          vm.password = "";
+        })
     };
 
     vm.register = function() {

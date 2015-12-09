@@ -10,13 +10,21 @@
   function LoginService($http, $q) {
     var s = {};
 
-    s.login =  function(_id, password) {
-      var payload = { email: _id, password: password };
+    s.currentUser = null;
+
+    s.login =  function(email, password) {
+      var deferred = $q.defer();
+      var payload = { email: email, password: password };
 
       $http
-        .post('/account/login', payload)
+        .post('/user/login', payload)
         .then(function (response) {
-        });
+          s.currentUser = _.clone(response.data)
+          deferred.resolve(response.data)
+        })
+        .catch(deferred.reject)
+
+      return deferred.promise
     };
 
     s.register = function(userObject) {
@@ -24,13 +32,22 @@
 
       $http
         .post('/user/register', userObject)
-        .then(deferred.resolve)
+        .then(function (response) {
+          deferred.resolve(response.data)
+        })
         .catch(deferred.reject)
 
       return deferred.promise
-    }
+    };
 
-    s.isLoggedIn = function() { return false };
+    s.isLoggedIn = function() { return s.currentUser !== null };
+
+    $http
+      .get('/user/login')
+      .then(function (response) {
+        s.currentUser = _.clone(response.data)
+      })
+      .catch()
 
     return s;
   }

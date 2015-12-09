@@ -6,19 +6,27 @@
     <md-button ng-click="ctrl.showLoginControls()">Login</md-button>
     <md-button ng-click="ctrl.register()">Register</md-button>
   </div>
+
   <div class="md-toolbar-tools" layout-margin ng-if="ctrl.getState() === 'login'">
     <md-button class="md-icon-button" aria-label="Go back" ng-click="ctrl.hideLoginControls()">
       <md-icon class="material-icons">arrow_back</md-icon>
     </md-button>
     <md-input-container md-theme="dark" flex>
       <label>Email</label>
-      <input class="white-text" type="email" ng-model="email" >
+      <input class="white-text" type="email" ng-model="ctrl.email" >
     </md-input-container>
     <md-input-container flex>
       <label>Password</label>
-      <input class="white-text" type="password" ng-model="password">
+      <input class="white-text" type="password" ng-model="ctrl.password">
     </md-input-container>
-    <md-button class="md-icon-button" aria-label="Go back" ng-click="ctrl.showLoginControls()">
+    <md-button class="md-icon-button" aria-label="Go back" ng-click="ctrl.login()">
       <md-icon class="material-icons">lock_open</md-icon>
-    </md-button>  </div>
+    </md-button>
+  </div>
+
+  <div class="md-toolbar-tools" layout-margin ng-if="ctrl.getState() === 'logged-in'">
+    <span flex>
+      Brand name SCHINKEN
+    </span>
+  </div>
 </md-toolbar>
