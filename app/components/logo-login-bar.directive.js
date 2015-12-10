@@ -21,6 +21,7 @@
 
     vm.email = '';
     vm.password = '';
+    vm.brandname = 'flighttrack'
 
     vm.getState = function() {
       if (LoginService.isLoggedIn()) {
@@ -39,14 +40,23 @@
     };
 
     vm.login = function() {
-      LoginService.login(vm.email, vm.password)
-        .catch(function() {
-          vm.password = "";
-        })
+      LoginService
+        .login(vm.email, vm.password)
+        .catch(function() { vm.password = "" })
     };
 
     vm.register = function() {
       $state.go('register');
+    };
+
+    vm.getCurrentUser = function() {
+      return LoginService.currentUser;
+    };
+
+    vm.logout = function() {
+      LoginService
+        .logout()
+        .then(function() { state = 'default' })
     };
   }
 })();

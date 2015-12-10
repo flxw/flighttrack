@@ -14,7 +14,7 @@ module.exports = function(app, passport) {
 
   app
     .route('/user/logout')
-    .get(userHandler.logout);
+    .get(userHandler.isLoggedIn, userHandler.logout);
 
   app
     .route('/user/register')

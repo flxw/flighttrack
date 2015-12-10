@@ -27,6 +27,20 @@
       return deferred.promise
     };
 
+    s.logout = function() {
+      var deferred = $q.defer()
+
+      $http
+        .get('/user/logout')
+        .then(function() {
+          s.currentUser = null;
+          deferred.resolve()
+        })
+        .catch(deferred.reject)
+
+      return deferred.promise
+    };
+
     s.register = function(userObject) {
       var deferred = $q.defer();
 

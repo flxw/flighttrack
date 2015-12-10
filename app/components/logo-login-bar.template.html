@@ -1,12 +1,12 @@
 <md-toolbar>
+  <!-- default top bar, not logged in, not trying to login -->
   <div class="md-toolbar-tools" layout-margin ng-if="ctrl.getState() === 'default'">
-    <span flex>
-      Brand name
-    </span>
+    <span flex> {{ ctrl.brandname }} </span>
     <md-button ng-click="ctrl.showLoginControls()">Login</md-button>
     <md-button ng-click="ctrl.register()">Register</md-button>
   </div>
 
+  <!-- login via top bar -->
   <div class="md-toolbar-tools" layout-margin ng-if="ctrl.getState() === 'login'">
     <md-button class="md-icon-button" aria-label="Go back" ng-click="ctrl.hideLoginControls()">
       <md-icon class="material-icons">arrow_back</md-icon>
@@ -19,14 +19,18 @@
       <label>Password</label>
       <input class="white-text" type="password" ng-model="ctrl.password">
     </md-input-container>
-    <md-button class="md-icon-button" aria-label="Go back" ng-click="ctrl.login()">
+    <md-button class="md-icon-button" aria-label="Login" ng-click="ctrl.login()">
       <md-icon class="material-icons">lock_open</md-icon>
     </md-button>
   </div>
 
+  <!-- Logged in, show basic profile info -->
   <div class="md-toolbar-tools" layout-margin ng-if="ctrl.getState() === 'logged-in'">
-    <span flex>
-      Brand name SCHINKEN
-    </span>
+    <span flex> {{ ctrl.brandname }} </span>
+
+    <span>{{ ctrl.getCurrentUser().firstname }} {{ ctrl.getCurrentUser().lastname }}</span>
+    <md-button class="md-icon-button" aria-label="Logout" ng-click="ctrl.logout()">
+      <md-icon class="material-icons">exit_to_app</md-icon>
+    </md-button>
   </div>
 </md-toolbar>
