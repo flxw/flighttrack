@@ -28,7 +28,7 @@
   <div class="md-toolbar-tools" layout-margin ng-if="ctrl.getState() === 'logged-in'">
     <span flex> {{ ctrl.brandname }} </span>
 
-    <span>{{ ctrl.getCurrentUser().firstname }} {{ ctrl.getCurrentUser().lastname }}</span>
+    <a ui-sref="profile({ userId: ctrl.getCurrentUser()._id })">{{ ctrl.getCurrentUser().firstname }} {{ ctrl.getCurrentUser().lastname }}</a>
     <md-button class="md-icon-button" aria-label="Logout" ng-click="ctrl.logout()">
       <md-icon class="material-icons">exit_to_app</md-icon>
     </md-button>

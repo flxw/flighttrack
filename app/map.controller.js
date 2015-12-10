@@ -28,7 +28,7 @@ function MapController(ProfileService, TripService, $state, $rootScope) {
   vm.coordinates = [];
   vm.events = {
     tilesloaded: function (map) {
-      $scope.$apply(function () {
+      $rootScope.$apply(function () {
         google.maps.event.trigger(map, "resize");
       });
     }
