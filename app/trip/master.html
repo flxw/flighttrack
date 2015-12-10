@@ -1,9 +1,9 @@
 <section class="layout-align-center-center layout-row">
   <md-button class="md-primary" ng-click="tripCtrl.goBack()" ng-disabled="tripCtrl.isEditing">back</md-button>
-  <md-button class="md-primary" ng-if="!tripCtrl.isEditing" ng-click="tripCtrl.edit()">modify</md-button>
-  <md-button class="md-primary" ng-if="tripCtrl.isEditing" ng-click="tripCtrl.saveChanges()">save</md-button>
-  <md-button class="md-primary" ng-if="tripCtrl.isEditing" ng-click="tripCtrl.cancelChanges()">cancel</md-button>
-  <md-button class="md-primary" ng-if="!tripCtrl.isEditing" ng-disabled="true">delete</md-button>
+  <md-button class="md-primary" ng-if="!tripCtrl.isEditing && tripCtrl.canBeEdited()" ng-click="tripCtrl.edit()">modify</md-button>
+  <md-button class="md-primary" ng-if="tripCtrl.isEditing  && tripCtrl.canBeEdited()" ng-click="tripCtrl.saveChanges()">save</md-button>
+  <md-button class="md-primary" ng-if="tripCtrl.isEditing  && tripCtrl.canBeEdited()" ng-click="tripCtrl.cancelChanges()">cancel</md-button>
+  <md-button class="md-primary" ng-if="!tripCtrl.isEditing && tripCtrl.canBeEdited()" ng-disabled="true">delete</md-button>
 </section>
 
 <div class="story-view" ng-if="!tripCtrl.isEditing">

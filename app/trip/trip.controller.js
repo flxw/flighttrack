@@ -6,16 +6,20 @@ angular
   .module('myApp')
   .controller("TripController", tripController);
 
-  tripController.$inject = ["TripService", "PlacesService", "Upload", "$http", "$state"];
+  tripController.$inject = ["TripService", "PlacesService", "Upload", "LoginService", "$http", "$state"];
 
-function tripController(TripService,  placesService, Upload, $http, $state) {
+function tripController(TripService,  PlacesService, Upload, LoginService, $http, $state) {
   var vm = this;
 
   vm.isEditing = false;
   vm.upload  = { hidden: true, progress: 0, image: '' };
-  vm.destinationSearch = { text: '', query: placesService.searchPlace };
+  vm.destinationSearch = { text: '', query: PlacesService.searchPlace };
 
   vm.trip = TripService.getTrip($state.params.tripId);
+
+  vm.canBeEdited = function() {
+    return LoginService.isLoggedIn && $state.params.userId === LoginService.currentUser._id;
+  };
 
   vm.goBack = function () { $state.go('profile', { userId: $state.params.userId }) }
 
