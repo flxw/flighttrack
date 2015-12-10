@@ -2,6 +2,7 @@
 
 var Trip  = require('../models/trip.js');
 var Image = require('../models/image.js');
+var User  = require('../models/user.js');
 
 var winston = require('winston');
 var database = require('../database');
@@ -45,17 +46,26 @@ exports.deleteImage = function(req,res) {
 };
 
 exports.postTrip = function(req,res) {
-  database.saveTrip(req.body)
-    .then(function() { res.sendStatus(200) })
-    .catch(function() { res.sendStatus(200) })
-}
+  var t = new Trip();
+
+  t.save(function(e,nt){
+    if (e) {
+      res.sendStatus(500)
+    } else {
+      User.findByIdAndUpdate(req.user._id, { $push: { trips: nt._doc._id } }, function(e) {
+        if (e) return res.sendStatus(500)
+        else res.json(nt)
+      });
+    }
+  })
+};
 
 exports.getTrip = function(req,res) {
   Trip.findById(req.params.id, function(e,t) {
     if (e) res.sendStatus(500)
     else res.json(t)
   })
-}
+};
 
 exports.updateTrip = function(req,res) {
   var t = req.body;
@@ -65,3 +75,21 @@ exports.updateTrip = function(req,res) {
     else res.sendStatus(200)
   });
 }
+
+exports.deleteTrip = function(req,res) {
+  Trip.findByIdAndRemove(req.params.id, function(err) {
+    if (err) {
+      winston.error(err);
+      res.sendStatus(500);
+    } else {
+      User.update({}, {$pull: { trips: {$in: [req.params.id]}}}, {multi: true}, function (err) {
+        if (err) {
+          winston.error(err);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
+      })
+    }
+  });
+};

@@ -10,7 +10,7 @@ tripService.$inject = ["$q", "$resource", "$cacheFactory", "$rootScope"];
 function tripService($q, $resource, $cacheFactory, $rootScope) {
   var s = {};
   var tripCache = $cacheFactory('Trips');
-  var resourceOptions = {
+  var actions = {
     update: {
       method:'PUT'
     },
@@ -19,7 +19,7 @@ function tripService($q, $resource, $cacheFactory, $rootScope) {
       cache: tripCache
     }
   };
-  var Trip = $resource('/trip/:tripId', null, resourceOptions);
+  var Trip = $resource('/trip/:tripId', null, actions);
 
   s.trips = {};
 
@@ -37,11 +37,13 @@ function tripService($q, $resource, $cacheFactory, $rootScope) {
   };
 
   s.saveTrip = function(trip) {
-    if (trip._id) {
-      s.trips[trip._id] = _.cloneDeep(trip);
-      Trip.update({ tripId: trip._id }, trip);
-      $rootScope.$emit('trips.updated')
-    }
+    s.trips[trip._id] = _.cloneDeep(trip);
+    Trip.update({ tripId: trip._id }, trip);
+    $rootScope.$emit('trips.updated')
+  };
+
+  s.createTrip = function() {
+    return Trip.save({ tripId: '' }, {}).$promise;
   };
 
   s.updateImages = function(tripId, images) {

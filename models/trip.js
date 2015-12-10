@@ -4,18 +4,18 @@ var timestamps = require('mongoose-timestamp');
 
 var tripSchema = new mongoose.Schema({
   destination: {
-    name: String,
+    name: { type: String, default: 'New trip' },
     coordinates: {
-      latitude: Number,
-      longitude: Number
+      latitude:  { type: Number, default: 52.393787  },
+      longitude: { type: Number, default: 13.1296473 }
     }
   },
   dates: {
-    start: Date,
-    end: Date
+    start: { type: Date, default: Date.now },
+    end:   { type: Date, default: Date.now }
   },
   images: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Image'} ],
-  storyMarkdown: String
+  storyMarkdown: { type: String, default: '' }
 });
 
 tripSchema.plugin(timestamps,  {

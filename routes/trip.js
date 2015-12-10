@@ -19,6 +19,15 @@ module.exports = function(app) {
   app
     .route('/trip/:id')
     .get(tripHandler.getTrip)
-    .put(tripHandler.updateTrip)
-    .post(tripHandler.postTrip);
+    .put(isLoggedIn, tripHandler.updateTrip)
+    .delete(isLoggedIn, tripHandler.deleteTrip)
+
+  app
+    .route('/trip')
+    .post(isLoggedIn, tripHandler.postTrip);
+};
+
+function isLoggedIn(req,res,next) {
+  if (req.isAuthenticated()) return next();
+  else res.sendStatus(401);
 };

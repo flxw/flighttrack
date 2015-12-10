@@ -6,7 +6,10 @@
     <h1 class="profile-name"><i class="profile-avatar material-icons">person</i></h1>
     <div class="md-list-item-text" layout="column">
       <h1 class="profile-name">{{ profileCtrl.getCurrentProfile().firstname }} {{ profileCtrl.getCurrentProfile().lastname }}</h1>
-      <p class="profile-caption"><i class="material-icons">flight_takeoff</i> {{ profileCtrl.getCurrentProfileTrips().length }} trips</p>
+      <p class="profile-caption">
+        <i class="material-icons">flight_takeoff</i> {{ profileCtrl.getCurrentProfileTrips().length }} TRIPS
+        <md-button aria-label="Add trip" ng-if="profileCtrl.canBeEdited()" ng-click="profileCtrl.addTrip()">add one</md-button>
+      </p>
     </div>
   </md-list-item>
   <md-list-item ng-repeat="trip in profileCtrl.getCurrentProfileTrips()"
