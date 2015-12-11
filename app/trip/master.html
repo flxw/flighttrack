@@ -47,7 +47,9 @@
         ngf-select="tripCtrl.uploadImage(tripCtrl.upload.image)"
         ngf-keep="false"
         ngf-multiple="false"
-        ngf-max-size="5MB">
+        ngf-max-size="5MB"
+        ngf-accept="'image/*'"
+        ngf-resize="{ width: 800, type: 'image/jpg' }">
         <md-icon class="material-icons">add</md-icon>
       </md-button>
       <md-progress-linear md-mode="determinate" value="{{ tripCtrl.upload.progress }}"></md-progress-linear>
