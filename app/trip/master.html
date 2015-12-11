@@ -37,7 +37,7 @@
   <md-divider></md-divider>
 
   <md-list>
-    <md-subheader layout-padding>
+    <md-lit-item layout-padding>
       Story images
       <md-button
         class="md-icon-button"
@@ -51,7 +51,7 @@
         <md-icon class="material-icons">add</md-icon>
       </md-button>
       <md-progress-linear md-mode="determinate" value="{{ tripCtrl.upload.progress }}"></md-progress-linear>
-    </md-subheader>
+    </md-lit-item>
     <md-list-item class="md-1-line" ng-repeat="image in tripCtrl.trip.images">
       <img ng-src="/img/{{ image }}" class="md-avatar" />
       <div class="md-list-item-text" layout="row">

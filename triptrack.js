@@ -52,5 +52,4 @@ require('./routes/trip')(app)
 require('./routes/image')(app)
 require('./routes/user')(app, passport)
 
-
 app.listen(port)
