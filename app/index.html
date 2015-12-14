@@ -17,12 +17,12 @@
   <link rel="stylesheet" type="text/css" href="style/main.css" async>
 </head>
 <body layout="row" ng-app="myApp">
-<md-content class="sidebar md-whiteframe-6dp" flex="33">
+<md-content class="sidebar md-whiteframe-6dp" flex="40">
   <logo-login-bar></logo-login-bar>
   <div flex layout="column" ui-view="master"></div>
 </md-content>
 
-<section flex ui-view="detail">
+<section class="detail-view" flex ui-view="detail">
 </section>
 
 <!-- In production use:
