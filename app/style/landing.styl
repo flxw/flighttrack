@@ -1,11 +1,21 @@
-.slogan
+.landing
+  margin 10%
+
   i
     font-size 75px
     color #808080
 
-  p.centered
+  p
     font-weight 100 !important
+
+  p.centered
     text-align center
+
+  p.block
+    text-align justify
+
+.tile
+  height 17.5rem
 
 @keyframes bounceInDown {
   from, 60%, 75%, 90%, to {
@@ -78,4 +88,13 @@
 .bounceInDown {
   -webkit-animation-name: bounceInDown;
   animation-name: bounceInDown;
+}
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-delay: 2s;
+  animation-delay: .5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
 }

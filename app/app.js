@@ -42,9 +42,6 @@
         views: {
           'master': {
             templateUrl: 'landing/master.html'
-          },
-          'detail': {
-            templateUrl: 'landing/detail.html'
           }
         }
       })
@@ -55,9 +52,6 @@
             templateUrl: 'register/master.html',
             controller: 'RegisterController',
             controllerAs: 'ctrl'
-          },
-          'detail': {
-            templateUrl: 'register/detail.html'
           }
         }
       })
@@ -68,11 +62,6 @@
             templateUrl: 'profile/master.html',
             controller: 'ProfileCtrl',
             controllerAs: 'profileCtrl'
-          },
-          'detail': {
-            templateUrl: 'profile/detail.html',
-            controller: 'MapController',
-            controllerAs: 'ctrl'
           }
         }
       })

@@ -18,7 +18,11 @@ function tripController(TripService,  PlacesService, Upload, LoginService, $http
   vm.trip = TripService.getTrip($state.params.tripId);
 
   vm.canBeEdited = function() {
-    return LoginService.isLoggedIn && $state.params.userId === LoginService.currentUser._id;
+    try {
+      return LoginService.isLoggedIn && $state.params.userId === LoginService.currentUser._id
+    } catch(e) {
+      return false
+    }
   };
 
   vm.goBack = function () { $state.go('profile', { userId: $state.params.userId }) }
@@ -67,6 +71,10 @@ function tripController(TripService,  PlacesService, Upload, LoginService, $http
         vm.trip.images.splice(imageIndex, 1)
       })
   };
+
+  vm.showImage = function(hr) {
+    debugger
+  }
 }
 
 // ------------------------------------

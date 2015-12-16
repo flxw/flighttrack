@@ -22,7 +22,22 @@
   <div flex layout="column" ui-view="master"></div>
 </md-content>
 
-<section class="detail-view" flex ui-view="detail">
+<section class="detail-view" flex ng-controller="MapController as map">
+  <ui-gmap-google-map flex
+                      center="map.center"
+                      zoom="map.zoom"
+                      options="map.options"
+                      pan="map.pan"
+                      control="map.control"
+                      events="map.events">
+
+    <ui-gmap-markers models="map.coordinates"
+                     control="map.markerControl"
+                     coords="'destination.coordinates'"
+                     fit="true"
+                     idKey="'_id'">
+    </ui-gmap-markers>
+  </ui-gmap-google-map>
 </section>
 
 <!-- In production use:

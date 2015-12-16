@@ -18,7 +18,7 @@ function MapController(ProfileService, TripService, $state, $rootScope) {
   vm.options = {
     disableDefaultUI: true,
     minZoom: 2,
-    maxZoom: 12
+    maxZoom: 13
   };
   vm.center = {
     latitude: 0,
@@ -27,11 +27,6 @@ function MapController(ProfileService, TripService, $state, $rootScope) {
   vm.markerControl = {};
   vm.coordinates = [];
   vm.events = {
-    tilesloaded: function (map) {
-      $rootScope.$apply(function () {
-        google.maps.event.trigger(map, "resize");
-      });
-    }
   };
 
   // act accordingly to current state, to reduce some lag, since
@@ -39,6 +34,7 @@ function MapController(ProfileService, TripService, $state, $rootScope) {
   $rootScope.$on('trips.updated', setCurrentMarkerCoordinates);
   $rootScope.$on('$stateChangeSuccess', function(event, toState) {
     switch(toState.name) {
+      case 'landing':
       case 'profile':
       case 'profile.trip': setCurrentMarkerCoordinates(); break;
       default: break;
@@ -49,19 +45,22 @@ function MapController(ProfileService, TripService, $state, $rootScope) {
     var coordinates;
 
     try {
-      if ($state.params.tripId) {
-        var t = TripService.getTrip($state.params.tripId)
-        coordinates = [t.destination.coordinates]
-      } else {
-        coordinates = _.map(ProfileService.getCurrentProfileTrips(), 'destination.coordinates')
+      switch ($state.current.name) {
+        case 'profile.trip':
+          var t = TripService.getTrip($state.params.tripId)
+          coordinates = [t]
+          break;
+
+        case 'profile':
+          coordinates = ProfileService.getCurrentProfileTrips()
+          break;
+
+        case 'landing':
+          coordinates = TripService.getMostRecentTrips()
+          break;
       }
     } catch(e) {
       return
-    }
-
-    for (var i = 0; i < coordinates.length; ++i) {
-      if (coordinates[i] === undefined) continue;
-      coordinates[i].id = i;
     }
 
     vm.coordinates = coordinates

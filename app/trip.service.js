@@ -9,7 +9,10 @@ tripService.$inject = ["$q", "$resource", "$cacheFactory", "$rootScope"];
 
 function tripService($q, $resource, $cacheFactory, $rootScope) {
   var s = {};
+
   var tripCache = $cacheFactory('Trips');
+  var recentTripCache = $cacheFactory('RecentTrips');
+
   var actions = {
     update: {
       method:'PUT'
@@ -20,6 +23,15 @@ function tripService($q, $resource, $cacheFactory, $rootScope) {
     }
   };
   var Trip = $resource('/trip/:tripId', null, actions);
+
+  var recentTripsActions = {
+    get: {
+      method: 'GET',
+      cache: recentTripCache,
+      isArray: true
+    }
+  };
+  var RecentTrips = $resource('/trips/recent', null, recentTripsActions);
 
   s.trips = {};
 
@@ -51,6 +63,10 @@ function tripService($q, $resource, $cacheFactory, $rootScope) {
   };
 
   s.updateCallback = function() {};
+
+  s.getMostRecentTrips = function() {
+    return RecentTrips.get()
+  };
 
   return s;
 }

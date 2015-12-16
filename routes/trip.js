@@ -25,6 +25,10 @@ module.exports = function(app) {
   app
     .route('/trip')
     .post(isLoggedIn, tripHandler.postTrip);
+
+  app
+    .route('/trips/recent')
+    .get(tripHandler.getMostRecentTrips)
 };
 
 function isLoggedIn(req,res,next) {
