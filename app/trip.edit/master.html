@@ -1,0 +1,64 @@
+<section class="layout-align-center-center layout-row">
+    <md-button class="md-primary" ng-click="tripEditCtrl.saveChanges()">save</md-button>
+    <md-button class="md-primary" ng-click="tripEditCtrl.cancelChanges()">cancel</md-button>
+</section>
+
+<div class="story-editor" layout-padding>
+  <md-autocomplete flex layout-margin
+                   md-selected-item="tripEditCtrl.trip.destination"
+                   md-search-text="tripEditCtrl.destinationSearch.text"
+                   md-items="item in tripEditCtrl.destinationSearch.query(tripEditCtrl.destinationSearch.text)"
+                   md-item-text="item.name"
+                   md-min-length="4"
+                   placeholder="Your destination">
+    <md-item-template>
+      <span md-highlight-text="tripEditCtrl.destinationSearch.text" md-highlight-flags="^i">{{ item.formatted_address }}</span>
+    </md-item-template>
+    <md-not-found>
+    No matching destination found :(
+    </md-not-found>
+  </md-autocomplete>
+
+  <div layout="row" layout-margin>
+    <md-datepicker flex ng-model="tripEditCtrl.trip.dates.start" md-placeholder="Start date"></md-datepicker>
+    <md-datepicker flex ng-model="tripEditCtrl.trip.dates.end"   md-placeholder="End date"></md-datepicker>
+  </div>
+
+  <md-divider></md-divider>
+
+  <md-list>
+    <md-list-item layout-padding>
+        IMAGES
+        <md-button
+                class="md-icon-button"
+                aria-label="Upload image"
+                ng-disabled="{{ tripEditCtrl.trip.images.length >= 5 }}"
+                ng-model="tripEditCtrl.upload.image"
+                ngf-select="tripEditCtrl.uploadImage(tripEditCtrl.upload.image)"
+                ngf-keep="false"
+                ngf-multiple="false"
+                ngf-max-size="5MB"
+                ngf-accept="'image/*'"
+                ngf-resize="{ width: 800, type: 'image/jpg' }">
+          <md-icon class="material-icons">add</md-icon>
+        </md-button>
+        <md-progress-linear md-mode="determinate" value="{{ tripEditCtrl.upload.progress }}"></md-progress-linear>
+      </md-list-item>
+    <md-list-item class="md-1-line" ng-repeat="image in tripEditCtrl.trip.images">
+      <img ng-src="/img/{{ image }}" class="md-avatar" />
+      <div class="md-list-item-text" layout="row">
+        <h3 flex>{{ image }}</h3>
+        <md-button class="right-control md-icon-button" ng-click="tripEditCtrl.deleteImage(image, $index)">
+          <md-icon class="material-icons">delete</md-icon>
+        </md-button>
+      </div>
+    </md-list-item>
+  </md-list>
+
+  <md-divider></md-divider>
+
+  <md-input-container class="md-block" layout-padding>
+    <label>Story (formatted in Markdown)</label>
+    <textarea class="markdown-content-editor" ng-model="tripEditCtrl.trip.storyMarkdown"></textarea>
+  </md-input-container>
+</div>

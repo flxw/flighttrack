@@ -4,40 +4,36 @@
 
 angular
   .module('myApp')
-  .controller("TripController", tripController);
+  .controller("TripEditController", TripEditController);
 
-  tripController.$inject = ["TripService", "PlacesService", "Upload", "LoginService", "$http", "$state", "$mdDialog"];
+  TripEditController.$inject = ["TripService", "PlacesService", "Upload", "$http", "$state"];
 
-function tripController(TripService,  PlacesService, Upload, LoginService, $http, $state, $mdDialog) {
+function TripEditController(TripService,  PlacesService, Upload, $http, $state) {
   var vm = this;
 
-  vm.isEditing = false;
   vm.upload  = { hidden: true, progress: 0, image: '' };
   vm.destinationSearch = { text: '', query: PlacesService.searchPlace };
-
   vm.trip = TripService.getTrip($state.params.tripId);
 
-  vm.canEdit = LoginService.canEdit;
-  vm.goBack = function () { $state.go('profile', { userId: $state.params.userId }) }
-
-  vm.edit = function () {
+  vm.trip
+    .$promise
+    .then(function() {
     vm.trip = _.cloneDeep(vm.trip);
 
-    vm.trip.dates.start = new Date(vm.trip.dates.start)
+    vm.trip.dates.start = new Date(vm.trip.dates.start);
     vm.trip.dates.end = new Date(vm.trip.dates.end)
-
-    vm.isEditing = true;
-  }
+  });
 
   vm.saveChanges = function () {
-    vm.isEditing = false;
     TripService.saveTrip(vm.trip)
+    $state.go('profile.trip')
   };
 
   vm.cancelChanges = function () {
+    // still save image uploads on client side
+    // to avoid bad updates
     var modifiedImages = _.cloneDeep(vm.trip.images);
-    vm.isEditing = false;
-    vm.trip      = TripService.getTrip($state.params.tripId);
+    vm.trip            = TripService.getTrip($state.params.tripId);
 
     if (! _.isEqual(vm.trip.images, modifiedImages)) {
       vm.trip.images = modifiedImages
@@ -64,21 +60,6 @@ function tripController(TripService,  PlacesService, Upload, LoginService, $http
         vm.trip.images.splice(imageIndex, 1)
       })
   };
-
-  vm.showImage = function(p) {
-    var templateString = ''
-
-    templateString += '<md-dialog aria-label="' + p.alt + '">';
-    templateString += '<img src="' + p.src + '">';
-    templateString += '</md-dialog>';
-
-    $mdDialog.show({
-      template : templateString,
-      parent: angular.element(document.body),
-      clickOutsideToClose: true
-    })
-
-  }
 }
 
 // ------------------------------------
