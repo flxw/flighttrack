@@ -58,6 +58,20 @@ function tripService($q, $resource, $cacheFactory, $rootScope) {
     return Trip.save({ tripId: '' }, {}).$promise;
   };
 
+  s.deleteTrip = function(tripId) {
+    var deferred = $q.defer()
+
+    Trip
+      .delete({ tripId: tripId })
+      .$promise
+      .then(function() {
+        delete s.trips[tripId];
+        deferred.resolve()
+      })
+
+    return deferred.promise
+  }
+
   s.updateImages = function(tripId, images) {
     s.trips[tripId].images = images;
   };

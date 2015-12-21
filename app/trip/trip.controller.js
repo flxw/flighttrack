@@ -6,9 +6,9 @@ angular
   .module('myApp')
   .controller("TripController", tripController);
 
-  tripController.$inject = ["TripService", "LoginService", "$http", "$state", "$mdDialog"];
+  tripController.$inject = ["TripService", "LoginService", "$state", "$mdDialog"];
 
-function tripController(TripService, LoginService, $http, $state, $mdDialog) {
+function tripController(TripService, LoginService, $state, $mdDialog) {
   var vm = this;
 
   vm.trip = TripService.getTrip($state.params.tripId);
@@ -16,6 +16,12 @@ function tripController(TripService, LoginService, $http, $state, $mdDialog) {
   vm.canEdit = LoginService.canEdit;
   vm.goBack = function() { $state.go('profile') };
   vm.goEdit = function() { $state.go('profile.trip.edit') };
+
+  vm.delete = function() {
+    TripService
+      .deleteTrip($state.params.tripId)
+      .then(vm.goBack)
+  }
 
   vm.showImage = function(img) {
     var templateString = ''

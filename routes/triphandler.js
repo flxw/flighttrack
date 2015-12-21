@@ -77,6 +77,8 @@ exports.updateTrip = function(req,res) {
 }
 
 exports.deleteTrip = function(req,res) {
+  // This is why mongodb is a problem: transactions are not possible!
+  // Just leave images in memory for now, they do not do any harm :>
   Trip.findByIdAndRemove(req.params.id, function(err) {
     if (err) {
       winston.error(err);
