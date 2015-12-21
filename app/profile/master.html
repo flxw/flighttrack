@@ -16,6 +16,6 @@
                 ng-click="profileCtrl.openTrip(trip._id)">
     <h3 class="story-title">{{ trip.destination.name }}</h3>
     <span class="story-dates">{{ trip.dates.start | date : "dd.MM.yyyy" }} - {{ trip.dates.end | date : "dd.MM.yyyy" }}</span>
-    <md-icon class="md-secondary material-icons" ng-click="profileCtrl.deleteTrip(trip._id)" aria-label="Delete trip">delete</md-icon>
+    <md-icon class="md-secondary material-icons" aria-label="Delete trip" ng-click="profileCtrl.deleteTrip(trip._id)" ng-if="profileCtrl.canEdit()">delete</md-icon>
   </md-list-item>
 </md-list>
