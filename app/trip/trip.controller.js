@@ -17,12 +17,6 @@ function tripController(TripService, LoginService, $state, $mdDialog) {
   vm.goBack = function() { $state.go('profile') };
   vm.goEdit = function() { $state.go('profile.trip.edit') };
 
-  vm.delete = function() {
-    TripService
-      .deleteTrip($state.params.tripId)
-      .then(vm.goBack)
-  }
-
   vm.showImage = function(img) {
     var templateString = ''
 

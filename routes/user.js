@@ -18,5 +18,7 @@ module.exports = function(app, passport) {
 
   app
     .route('/user/register')
-    .post(passport.authenticate('local-signup'), userHandler.registerUser);
+    .post(passport.authenticate('local-signup'),
+          passport.authenticate('local-login'),
+          userHandler.login);
 };
