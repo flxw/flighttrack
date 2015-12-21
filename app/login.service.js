@@ -5,9 +5,9 @@
     .module("myApp")
     .factory("LoginService", LoginService);
 
-  LoginService.$inject = ["$http", "$q"];
+  LoginService.$inject = ["$http", "$q", "$state"];
 
-  function LoginService($http, $q) {
+  function LoginService($http, $q, $state) {
     var s = {};
 
     s.currentUser = null;
@@ -54,8 +54,16 @@
       return deferred.promise
     };
 
-    s.isLoggedIn = function() { return s.currentUser !== null };
+    s.isLoggedIn  = function() { return s.currentUser !== null };
+    s.canBeEdited = function() {
+      try {
+        return s.isLoggedIn() && $state.params.userId === s.currentUser._id
+      } catch(e) {
+        return false
+      }
+    };
 
+    // test for current logged in user
     $http
       .get('/user/login')
       .then(function (response) {
