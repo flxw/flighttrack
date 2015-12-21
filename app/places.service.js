@@ -32,7 +32,8 @@ function PlacesService(uiGmapIsReady, $q) {
 
         for (var i = 0, j = results.length; i < j; ++i) {
           formattedResults.push({
-            name: results[i].formatted_address,
+            name: results[i].name,
+            formatted_address: results[i].formatted_address,
             coordinates: {
               latitude: results[i].geometry.location.lat(),
               longitude: results[i].geometry.location.lng()

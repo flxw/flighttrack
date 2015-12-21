@@ -22,7 +22,7 @@
                    md-min-length="4"
                    placeholder="Your destination">
     <md-item-template>
-      <span md-highlight-text="tripCtrl.destinationSearch.text" md-highlight-flags="^i">{{item.name}}</span>
+      <span md-highlight-text="tripCtrl.destinationSearch.text" md-highlight-flags="^i">{{ item.formatted_address }}</span>
     </md-item-template>
     <md-not-found>
       No states matching destination found...
@@ -38,7 +38,7 @@
 
   <md-list>
     <md-list-item layout-padding>
-      Story images
+      IMAGES
       <md-button
         class="md-icon-button"
         aria-label="Upload"
@@ -69,6 +69,6 @@
 
   <md-input-container class="md-block" layout-padding>
     <label>Story (formatted in Markdown)</label>
-    <textarea rows="10" class="markdown-content-editor" ng-model="tripCtrl.trip.storyMarkdown"></textarea>
+    <textarea class="markdown-content-editor" ng-model="tripCtrl.trip.storyMarkdown"></textarea>
   </md-input-container>
 </div>
