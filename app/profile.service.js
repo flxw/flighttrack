@@ -48,6 +48,15 @@
         })
     };
 
+    s.deleteTrip = function(id) {
+      TripService
+        .deleteTrip(id)
+        .then(function() {
+          function comparer(tripId) { return tripId === id }
+          _.remove(s.profiles[$state.params.userId].trips, comparer)
+        })
+    }
+
     return s;
   };
   // ------------------------------------
