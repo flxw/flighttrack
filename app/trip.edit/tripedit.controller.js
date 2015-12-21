@@ -15,14 +15,20 @@ function TripEditController(TripService,  PlacesService, Upload, $http, $state) 
   vm.destinationSearch = { text: '', query: PlacesService.searchPlace };
   vm.trip = TripService.getTrip($state.params.tripId);
 
-  vm.trip
-    .$promise
-    .then(function() {
+  try {
+    vm.trip
+      .$promise
+      .then(prepareData);
+  } catch(e) {
+    prepareData()
+  }
+
+  function prepareData() {
     vm.trip = _.cloneDeep(vm.trip);
 
     vm.trip.dates.start = new Date(vm.trip.dates.start);
     vm.trip.dates.end = new Date(vm.trip.dates.end)
-  });
+  }
 
   vm.saveChanges = function () {
     TripService.saveTrip(vm.trip)
@@ -39,6 +45,7 @@ function TripEditController(TripService,  PlacesService, Upload, $http, $state) 
       vm.trip.images = modifiedImages
       TripService.updateImages(vm.trip._id, modifiedImages)
     }
+    $state.go('profile.trip')
   };
 
   vm.uploadImage = function(image) {
