@@ -17,7 +17,7 @@ exports.logout = function(req, res) {
 
 exports.getUser = function(req, res) {
   // TODO trips need to know about their travellers
-  User.findById(req.params.uid, function(e,u) {
+  User.findById(req.params.uid, '_id firstname lastname trips', function(e,u) {
     res.json(u._doc)
   });
 };
