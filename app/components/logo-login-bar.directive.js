@@ -21,7 +21,7 @@
 
     vm.email = '';
     vm.password = '';
-    vm.brandname = 'flighttrack'
+    vm.brandname = 'mapium'
 
     vm.getState = function() {
       if (LoginService.isLoggedIn()) {
