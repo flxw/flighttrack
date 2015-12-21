@@ -47,7 +47,8 @@
       $http
         .post('/user/register', userObject)
         .then(function (response) {
-          deferred.resolve(response.data)
+          s.currentUser = _.clone(response.data);
+          deferred.resolve(s.currentUser);
         })
         .catch(deferred.reject)
 

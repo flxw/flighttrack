@@ -20,7 +20,8 @@
     vm.isNoRobot = false;
 
     vm.register = function() {
-      LoginService.register(vm.user)
+      LoginService
+        .register(vm.user)
         .then(function(user) {
           $state.go('profile', { userId: user._id })
         })
