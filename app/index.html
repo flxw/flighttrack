@@ -19,7 +19,7 @@
 <body layout="row" ng-app="myApp">
 <md-content class="sidebar md-whiteframe-6dp" flex="40">
   <logo-login-bar></logo-login-bar>
-  <div flex layout="column" ui-view="master"></div>
+  <div id="master-content" flex layout="column" ui-view="master"></div>
 </md-content>
 
 <section class="detail-view" flex ng-controller="MapController as map">
