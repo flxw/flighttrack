@@ -81,6 +81,16 @@
           }
         }
       })
+      .state('profile.trip.edit', {
+        url: '/edit',
+        views: {
+          'master@': {
+            templateUrl: 'trip.edit/master.html',
+            controller: 'TripEditController',
+            controllerAs: 'tripEditCtrl'
+          }
+        }
+      })
 
     $mdThemingProvider
       .theme('dark')
@@ -88,18 +98,14 @@
   }
 
   function run($rootScope, $state, LoginService) {
-    /*$rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-      var doRedirectToLoggedOut = !LoginService.isLoggedIn && toState.name === "home.loggedIn";
-      var doRedirectToLoggedIn = LoginService.isLoggedIn && toState.name === "home.loggedOut.default";
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+      var redirectToTripPage = !LoginService.canEdit && toState.name === "profile.trip.edit";
 
-      if (doRedirectToLoggedOut) {
+      if (redirectToTripPage) {
         event.preventDefault();
-        $state.go("home.loggedOut.default");
-      } else if (doRedirectToLoggedIn) {
-        event.preventDefault();
-        $state.go("home.loggedIn");
+        $state.go("profile.trip");
       }
-    });*/
+    })
   }
 
   // ------------------------------------

@@ -1,9 +1,9 @@
 <section class="layout-align-center-center layout-row">
   <md-button class="md-primary" ng-click="tripCtrl.goBack()" ng-disabled="tripCtrl.isEditing">back</md-button>
-  <md-button class="md-primary" ng-if="!tripCtrl.isEditing && tripCtrl.canBeEdited()" ng-click="tripCtrl.edit()">modify</md-button>
-  <md-button class="md-primary" ng-if="tripCtrl.isEditing  && tripCtrl.canBeEdited()" ng-click="tripCtrl.saveChanges()">save</md-button>
-  <md-button class="md-primary" ng-if="tripCtrl.isEditing  && tripCtrl.canBeEdited()" ng-click="tripCtrl.cancelChanges()">cancel</md-button>
-  <md-button class="md-primary" ng-if="!tripCtrl.isEditing && tripCtrl.canBeEdited()" ng-disabled="true">delete</md-button>
+  <md-button class="md-primary" ng-if="!tripCtrl.isEditing && tripCtrl.canEdit()" ng-click="tripCtrl.edit()">modify</md-button>
+  <md-button class="md-primary" ng-if="tripCtrl.isEditing  && tripCtrl.canEdit()" ng-click="tripCtrl.saveChanges()">save</md-button>
+  <md-button class="md-primary" ng-if="tripCtrl.isEditing  && tripCtrl.canEdit()" ng-click="tripCtrl.cancelChanges()">cancel</md-button>
+  <md-button class="md-primary" ng-if="!tripCtrl.isEditing && tripCtrl.canEdit()" ng-disabled="true">delete</md-button>
 </section>
 
 <div class="story-view" ng-if="!tripCtrl.isEditing">
@@ -13,62 +13,3 @@
   <div marked="tripCtrl.trip.storyMarkdown"></div>
 </div>
 
-<div class="story-editor" layout-padding ng-if="tripCtrl.isEditing">
-  <md-autocomplete flex layout-margin
-                   md-selected-item="tripCtrl.trip.destination"
-                   md-search-text="tripCtrl.destinationSearch.text"
-                   md-items="item in tripCtrl.destinationSearch.query(tripCtrl.destinationSearch.text)"
-                   md-item-text="item.name"
-                   md-min-length="4"
-                   placeholder="Your destination">
-    <md-item-template>
-      <span md-highlight-text="tripCtrl.destinationSearch.text" md-highlight-flags="^i">{{ item.formatted_address }}</span>
-    </md-item-template>
-    <md-not-found>
-      No states matching destination found...
-    </md-not-found>
-  </md-autocomplete>
-
-  <div layout="row" layout-margin>
-    <md-datepicker flex ng-model="tripCtrl.trip.dates.start" md-placeholder="Start date"></md-datepicker>
-    <md-datepicker flex ng-model="tripCtrl.trip.dates.end"   md-placeholder="End date"></md-datepicker>
-  </div>
-
-  <md-divider></md-divider>
-
-  <md-list>
-    <md-list-item layout-padding>
-      IMAGES
-      <md-button
-        class="md-icon-button"
-        aria-label="Upload"
-        ng-disabled="{{ tripCtrl.trip.images.length >= 5 }}"
-        ng-model="tripCtrl.upload.image"
-        ngf-select="tripCtrl.uploadImage(tripCtrl.upload.image)"
-        ngf-keep="false"
-        ngf-multiple="false"
-        ngf-max-size="5MB"
-        ngf-accept="'image/*'"
-        ngf-resize="{ width: 800, type: 'image/jpg' }">
-        <md-icon class="material-icons">add</md-icon>
-      </md-button>
-      <md-progress-linear md-mode="determinate" value="{{ tripCtrl.upload.progress }}"></md-progress-linear>
-    </md-list-item>
-    <md-list-item class="md-1-line" ng-repeat="image in tripCtrl.trip.images">
-      <img ng-src="/img/{{ image }}" class="md-avatar" />
-      <div class="md-list-item-text" layout="row">
-        <h3 flex>{{ image }}</h3>
-        <md-button class="right-control md-icon-button" ng-click="tripCtrl.deleteImage(image, $index)">
-          <md-icon class="material-icons">delete</md-icon>
-        </md-button>
-      </div>
-    </md-list-item>
-  </md-list>
-
-  <md-divider></md-divider>
-
-  <md-input-container class="md-block" layout-padding>
-    <label>Story (formatted in Markdown)</label>
-    <textarea class="markdown-content-editor" ng-model="tripCtrl.trip.storyMarkdown"></textarea>
-  </md-input-container>
-</div>

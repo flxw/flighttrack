@@ -55,7 +55,7 @@
     };
 
     s.isLoggedIn  = function() { return s.currentUser !== null };
-    s.canBeEdited = function() {
+    s.canEdit = function() {
       try {
         return s.isLoggedIn() && $state.params.userId === s.currentUser._id
       } catch(e) {

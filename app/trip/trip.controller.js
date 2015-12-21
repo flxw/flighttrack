@@ -17,7 +17,7 @@ function tripController(TripService,  PlacesService, Upload, LoginService, $http
 
   vm.trip = TripService.getTrip($state.params.tripId);
 
-  vm.canBeEdited = LoginService.canBeEdited;
+  vm.canEdit = LoginService.canEdit;
   vm.goBack = function () { $state.go('profile', { userId: $state.params.userId }) }
 
   vm.edit = function () {
