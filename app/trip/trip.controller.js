@@ -6,9 +6,9 @@ angular
   .module('myApp')
   .controller("TripController", tripController);
 
-  tripController.$inject = ["TripService", "PlacesService", "Upload", "LoginService", "$http", "$state"];
+  tripController.$inject = ["TripService", "PlacesService", "Upload", "LoginService", "$http", "$state", "$mdDialog"];
 
-function tripController(TripService,  PlacesService, Upload, LoginService, $http, $state) {
+function tripController(TripService,  PlacesService, Upload, LoginService, $http, $state, $mdDialog) {
   var vm = this;
 
   vm.isEditing = false;
@@ -72,8 +72,19 @@ function tripController(TripService,  PlacesService, Upload, LoginService, $http
       })
   };
 
-  vm.showImage = function(hr) {
-    debugger
+  vm.showImage = function(p) {
+    var templateString = ''
+
+    templateString += '<md-dialog aria-label="' + p.alt + '">';
+    templateString += '<img src="' + p.src + '">';
+    templateString += '</md-dialog>';
+
+    $mdDialog.show({
+      template : templateString,
+      parent: angular.element(document.body),
+      clickOutsideToClose: true
+    })
+
   }
 }
 

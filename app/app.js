@@ -30,7 +30,13 @@
 
     markedProvider.setRenderer({
       image: function (href, title, text) {
-        return "<img src='/img/" + href + "' onclick='angular.element(document.querySelector(\"#master-content\")).scope().tripCtrl.showImage()'>";
+        var imageString;
+
+        imageString  = "<img src='/img/" + href + "' ";
+        imageString += "onclick='angular.element(document.querySelector(\"#master-content\")).scope().tripCtrl.showImage(this)' ";
+        imageString += "alt='" + escape(text) + "'>"
+
+        return imageString;
       }
     });
 
