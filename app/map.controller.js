@@ -29,6 +29,10 @@ function MapController(ProfileService, TripService, $state, $rootScope) {
   vm.events = {
   };
 
+  vm.handleMarkerClick = function(marker) {
+    $state.go('trip', { tripId: marker.model._id })
+  };
+
   // act accordingly to current state, to reduce some lag, since
   // the map component would otherwise be loaded multiple times
   $rootScope.$on('trips.updated', setCurrentMarkerCoordinates);
