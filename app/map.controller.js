@@ -40,8 +40,8 @@ function MapController(ProfileService, TripService, $state, $rootScope) {
     switch(toState.name) {
       case 'landing':
       case 'profile':
-      case 'profile.trip':
-      case 'profile.trip.edit': setCurrentMarkerCoordinates(); break;
+      case 'trip':
+      case 'trip.edit': setCurrentMarkerCoordinates(); break;
       default: break;
     }
   });
@@ -51,8 +51,8 @@ function MapController(ProfileService, TripService, $state, $rootScope) {
 
     try {
       switch ($state.current.name) {
-        case 'profile.trip':
-        case 'profile.trip.edit':
+        case 'trip':
+        case 'trip.edit':
           var t = TripService.getTrip($state.params.tripId)
           coordinates = [t]
           break;

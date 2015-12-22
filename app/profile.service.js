@@ -29,6 +29,10 @@
       return trips
     };
 
+    s.getTripIdsForUser = function(uid) {
+      return _.map(s.getTripsForUser(uid), '_id');
+    }
+
     s.getCurrentProfileTrips = function() {
       return s.getTripsForUser($state.params.userId)
     };
@@ -44,7 +48,7 @@
           var uid = $state.params.userId;
 
           s.profiles[uid].trips.push(newTrip._id);
-          $state.go('profile.trip', { tripId: newTrip._id });
+          $state.go('trip', { tripId: newTrip._id });
         })
     };
 

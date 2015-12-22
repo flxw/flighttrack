@@ -62,7 +62,7 @@
         }
       })
       .state('profile', {
-        url: '/:userId',
+        url: '/u/:userId',
         views: {
           'master': {
             templateUrl: 'profile/master.html',
@@ -71,17 +71,17 @@
           }
         }
       })
-      .state('profile.trip', {
-        url: '/:tripId',
+      .state('trip', {
+        url: '/t/:tripId',
         views: {
-          'master@': {
+          'master': {
             templateUrl: 'trip/master.html',
             controller: 'TripController',
             controllerAs: 'tripCtrl'
           }
         }
       })
-      .state('profile.trip.edit', {
+      .state('trip.edit', {
         url: '/edit',
         views: {
           'master@': {
@@ -99,11 +99,11 @@
 
   function run($rootScope, $state, LoginService) {
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-      var redirectToTripPage = !LoginService.canEdit && toState.name === "profile.trip.edit";
+      var redirectToTripPage = !LoginService.canEdit && toState.name === "trip.edit";
 
       if (redirectToTripPage) {
         event.preventDefault();
-        $state.go("profile.trip");
+        $state.go("trip");
       }
     })
   }

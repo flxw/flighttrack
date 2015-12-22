@@ -5,9 +5,9 @@
     .module("myApp")
     .factory("LoginService", LoginService);
 
-  LoginService.$inject = ["$http", "$q", "$state"];
+  LoginService.$inject = ["$http", "$q", "$state", "ProfileService"];
 
-  function LoginService($http, $q, $state) {
+  function LoginService($http, $q, $state, ProfileService) {
     var s = {};
 
     s.currentUser = null;
@@ -58,7 +58,10 @@
     s.isLoggedIn  = function() { return s.currentUser !== null };
     s.canEdit = function() {
       try {
-        return s.isLoggedIn() && $state.params.userId === s.currentUser._id
+        var isOwnProfile = $state.params.userId === s.currentUser._id;
+        var isOwnTrip    = ProfileService.getTripIdsForUser(s.currentUser._id).indexOf($state.params.tripId) >= 0;
+
+        return s.isLoggedIn() && (isOwnProfile || isOwnTrip)
       } catch(e) {
         return false
       }

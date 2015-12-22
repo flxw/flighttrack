@@ -14,8 +14,7 @@ function tripController(TripService, LoginService, $state, $mdDialog) {
   vm.trip = TripService.getTrip($state.params.tripId);
 
   vm.canEdit = LoginService.canEdit;
-  vm.goBack = function() { $state.go('profile') };
-  vm.goEdit = function() { $state.go('profile.trip.edit') };
+  vm.goEdit = function() { $state.go('trip.edit') };
 
   vm.showImage = function(img) {
     var templateString = ''

@@ -32,7 +32,7 @@ function TripEditController(TripService,  PlacesService, Upload, $http, $state) 
 
   vm.saveChanges = function () {
     TripService.saveTrip(vm.trip)
-    $state.go('profile.trip')
+    $state.go('trip')
   };
 
   vm.cancelChanges = function () {
@@ -45,7 +45,7 @@ function TripEditController(TripService,  PlacesService, Upload, $http, $state) 
       vm.trip.images = modifiedImages
       TripService.updateImages(vm.trip._id, modifiedImages)
     }
-    $state.go('profile.trip')
+    $state.go('trip')
   };
 
   vm.uploadImage = function(image) {

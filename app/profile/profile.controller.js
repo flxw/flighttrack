@@ -17,7 +17,7 @@ function profileCtrl(ProfileService, LoginService, $state) {
   vm.deleteTrip             = ProfileService.deleteTrip;
   vm.getCurrentProfileTrips = ProfileService.getCurrentProfileTrips;
   vm.getCurrentProfile      = ProfileService.getCurrentProfile;
-  vm.openTrip = function(tripId) { $state.go('profile.trip', { userId: $state.params.userId, tripId: tripId }) }
+  vm.openTrip = function(tripId) { $state.go('trip', { tripId: tripId }) }
 };
 
 // ------------------------------------
