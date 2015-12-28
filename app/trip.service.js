@@ -40,9 +40,11 @@ function tripService($q, $resource, $cacheFactory, $rootScope) {
       s.trips[tripId] = { };
       s.trips[tripId] = Trip.get({ tripId: tripId });
 
-      s.trips[tripId].$promise.then(function() {
-        $rootScope.$emit('trips.updated')
-      });
+      s.trips[tripId]
+        .$promise
+        .then(function() {
+          $rootScope.$emit('trips.updated')
+        });
     }
 
     return s.trips[tripId];
