@@ -69,7 +69,7 @@ function MapController(ProfileService, TripService, $state, $rootScope) {
       return
     }
 
-    vm.coordinates = coordinates
+    vm.coordinates = coordinates;
   };
 }
 
