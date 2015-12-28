@@ -69,6 +69,10 @@ function MapController(ProfileService, TripService, $state, $rootScope) {
       return
     }
 
+    for (var i = 0; i < coordinates.length; ++i) {
+      coordinates[i].icon = '/img/map-marker.png'
+    }
+
     vm.coordinates = coordinates;
   };
 }

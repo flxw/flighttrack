@@ -32,6 +32,7 @@ function tripService($q, $resource, $cacheFactory, $rootScope) {
     }
   };
   var RecentTrips = $resource('/trips/recent', null, recentTripsActions);
+  var recentTrips = null;
 
   s.trips = {};
 
@@ -81,7 +82,17 @@ function tripService($q, $resource, $cacheFactory, $rootScope) {
   s.updateCallback = function() {};
 
   s.getMostRecentTrips = function() {
-    return RecentTrips.get()
+    if (recentTrips === null) {
+      recentTrips = RecentTrips.get();
+
+      recentTrips
+        .$promise
+        .then(function () {
+          $rootScope.$emit('trips.updated')
+        });
+    }
+
+    return recentTrips;
   };
 
   return s;
