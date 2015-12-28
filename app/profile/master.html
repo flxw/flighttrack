@@ -7,7 +7,7 @@
     <div class="md-list-item-text" layout="column">
       <h1 class="profile-name">{{ profileCtrl.getCurrentProfile().firstname }} {{ profileCtrl.getCurrentProfile().lastname }}</h1>
       <p class="profile-caption">
-        <i class="material-icons">flight_takeoff</i> {{ profileCtrl.getCurrentProfileTrips().length }} TRIPS
+        {{ profileCtrl.getCurrentProfileTrips().length }} TRIP<span ng-if="profileCtrl.getCurrentProfileTrips().length > 1">S</span>
         <md-button aria-label="Add trip" ng-if="profileCtrl.canEdit()" ng-click="profileCtrl.addTrip()">add one</md-button>
       </p>
     </div>
