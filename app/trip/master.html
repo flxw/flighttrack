@@ -1,10 +1,12 @@
-<section class="layout-align-center-center layout-row">
-  <md-button class="md-primary" ng-click="tripCtrl.goEdit()" ng-if="tripCtrl.canEdit()">modify</md-button>
-</section>
-
 <div class="story-view">
   <h1 class="story-title">{{ tripCtrl.trip.destination.name }}</h1>
   <span class="story-dates">{{ tripCtrl.trip.dates.start | date : "dd.MM.yyyy"}} - {{ tripCtrl.trip.dates.end | date : "dd.MM.yyyy"}}</span>
+  <md-button class="md-icon-button"
+             style="vertical-align: super"
+             ng-click="tripCtrl.goEdit()"
+             ng-if="tripCtrl.canEdit()">
+    <md-icon class="material-icons">edit</md-icon>
+  </md-button>
   <md-divider></md-divider>
   <div marked="tripCtrl.trip.storyMarkdown"></div>
 </div>
