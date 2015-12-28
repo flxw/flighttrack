@@ -1,7 +1,8 @@
 <md-toolbar>
   <!-- default top bar, not logged in, not trying to login -->
   <div class="md-toolbar-tools" layout-margin ng-if="ctrl.getState() === 'default'">
-    <span flex> {{ ctrl.brandname }} </span>
+    <a href="/"><img src="/img/logo.png" style="height: 36px"></a>
+    <span flex></span>
     <md-button ng-click="ctrl.showLoginControls()">Login</md-button>
     <md-button ng-click="ctrl.register()">Register</md-button>
   </div>

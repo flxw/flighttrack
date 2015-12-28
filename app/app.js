@@ -94,7 +94,12 @@
 
     $mdThemingProvider
       .theme('dark')
-      .primaryPalette('yellow')
+      .primaryPalette('yellow');
+
+    $mdThemingProvider.theme('default')
+      .primaryPalette('cyan', {
+        'default': '700'
+      })
   }
 
   function run($rootScope, $state, LoginService) {
