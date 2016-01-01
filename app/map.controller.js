@@ -73,7 +73,7 @@ function MapController(ProfileService, TripService, $state, $rootScope) {
       coordinates[i].icon = '/img/map-marker.png';
 
       // prevent map component from breaking while requests are pending
-      if (!coordinates[i].$resolved) {
+      if (!coordinates[i]._id || coordinates[i].$resolved === false) {
         coordinates[i]._id = i
       }
     }
