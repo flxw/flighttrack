@@ -70,7 +70,12 @@ function MapController(ProfileService, TripService, $state, $rootScope) {
     }
 
     for (var i = 0; i < coordinates.length; ++i) {
-      coordinates[i].icon = '/img/map-marker.png'
+      coordinates[i].icon = '/img/map-marker.png';
+
+      // prevent map component from breaking while requests are pending
+      if (!!coordinates[i].$resolved) {
+        coordinates[i]._id = i
+      }
     }
 
     vm.coordinates = coordinates;
